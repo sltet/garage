@@ -2,7 +2,7 @@ package company
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sltet/garage/core"
+	"github.com/sltet/garage/app/core"
 	"go.uber.org/dig"
 )
 

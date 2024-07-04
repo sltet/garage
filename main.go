@@ -2,10 +2,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sltet/garage/company"
-	"github.com/sltet/garage/core"
+	"github.com/sltet/garage/app/company"
+	"github.com/sltet/garage/app/core"
+	"github.com/sltet/garage/app/user"
 	_ "github.com/sltet/garage/docs"
-	"github.com/sltet/garage/user"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/dig"
