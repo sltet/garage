@@ -12,11 +12,11 @@ func (r Registry) Name() string {
 	return "company"
 }
 
-func (r Registry) Services(c *dig.Container) {
+func (r Registry) ServicesDefinition(c *dig.Container) {
 	_ = c.Provide(NewController, dig.As(new(ControllerInterface)))
 }
 
-func (r Registry) GetApiRouteDefinitions() []core.ApiRouteDefinition {
+func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
@@ -28,8 +28,8 @@ func (r Registry) GetApiRouteDefinitions() []core.ApiRouteDefinition {
 	}
 }
 
-func (r Registry) ApiRoutes(c *dig.Container, router *gin.Engine) {
-	for _, apiRoute := range r.GetApiRouteDefinitions() {
+func (r Registry) ApiRoutesRegistration(c *dig.Container, router *gin.Engine) {
+	for _, apiRoute := range r.ApiRouteDefinitions() {
 		router.Handle(apiRoute.Method.String(), apiRoute.Path, func(ctx *gin.Context) {
 			_ = c.Invoke(func(handler ControllerInterface) {
 				apiRoute.Handler(ctx, handler)

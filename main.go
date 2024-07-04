@@ -22,13 +22,13 @@ func getRegistries() []core.AppRegistry {
 
 func registerApiRoutes(ctn *dig.Container, router *gin.Engine) {
 	for _, registry := range getRegistries() {
-		registry.ApiRoutes(ctn, router)
+		registry.ApiRoutesRegistration(ctn, router)
 	}
 }
 
 func registerServices(ctn *dig.Container) {
 	for _, registry := range getRegistries() {
-		registry.Services(ctn)
+		registry.ServicesDefinition(ctn)
 	}
 }
 

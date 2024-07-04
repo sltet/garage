@@ -7,6 +7,7 @@ import (
 
 type AppRegistry interface {
 	Name() string
-	Services(container *dig.Container)
-	ApiRoutes(c *dig.Container, router *gin.Engine)
+	ServicesDefinition(container *dig.Container)
+	ApiRouteDefinitions() []ApiRouteDefinition
+	ApiRoutesRegistration(c *dig.Container, router *gin.Engine)
 }
