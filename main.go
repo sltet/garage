@@ -43,10 +43,7 @@ func main() {
 
 	registerApiRoutes(router)
 
-	handler := ginSwagger.WrapHandler(swaggerfiles.Handler,
-		ginSwagger.URL("http://localhost:8080/swagger/doc.json"),
-		ginSwagger.DefaultModelsExpandDepth(-1))
-
+	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))
 	router.GET("/swagger/*any", handler)
 
 	router.Run() // Listen and serve on 0.0.0.0:8080

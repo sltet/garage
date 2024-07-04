@@ -1,4 +1,21 @@
 basePath: /
+definitions:
+  company.Company:
+    properties:
+      address_line_1:
+        type: string
+      address_line_2:
+        type: string
+      name:
+        type: string
+    type: object
+  user.User:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+    type: object
 info:
   contact: {}
 paths:
@@ -6,26 +23,30 @@ paths:
     get:
       consumes:
       - application/json
-      description: do ping
+      description: find all companies
       produces:
       - application/json
       responses:
         "200":
           description: OK
-      summary: find all users
+          schema:
+            $ref: '#/definitions/company.Company'
+      summary: find all companies
       tags:
-      - example
+      - company
   /users:
     get:
       consumes:
       - application/json
-      description: do ping
+      description: find all users
       produces:
       - application/json
       responses:
         "200":
           description: OK
+          schema:
+            $ref: '#/definitions/user.User'
       summary: find all users
       tags:
-      - example
+      - user
 swagger: "2.0"

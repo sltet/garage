@@ -24,11 +24,11 @@ func (r Registry) ApiRoutes() []core.ApiRouteDefinition {
 // FindAllUsers godoc
 // @Summary find all users
 // @Schemes
-// @Description do ping
-// @Tags example
+// @Description find all users
+// @Tags user
 // @Accept json
 // @Produce json
-// @Success 200
+// @Success 200 {object} User
 // @Router /users [get]
 func findAllUsers(ctx *gin.Context) {
 	ctx.JSON(200, []User{

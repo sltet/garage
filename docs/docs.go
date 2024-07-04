@@ -17,7 +17,7 @@ const docTemplate = `{
     "paths": {
         "/companies": {
             "get": {
-                "description": "do ping",
+                "description": "find all companies",
                 "consumes": [
                     "application/json"
                 ],
@@ -25,19 +25,22 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "example"
+                    "company"
                 ],
-                "summary": "find all users",
+                "summary": "find all companies",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/company.Company"
+                        }
                     }
                 }
             }
         },
         "/users": {
             "get": {
-                "description": "do ping",
+                "description": "find all users",
                 "consumes": [
                     "application/json"
                 ],
@@ -45,13 +48,43 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "example"
+                    "user"
                 ],
                 "summary": "find all users",
                 "responses": {
                     "200": {
-                        "description": "OK"
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.User"
+                        }
                     }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "company.Company": {
+            "type": "object",
+            "properties": {
+                "address_line_1": {
+                    "type": "string"
+                },
+                "address_line_2": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "user.User": {
+            "type": "object",
+            "properties": {
+                "first_name": {
+                    "type": "string"
+                },
+                "last_name": {
+                    "type": "string"
                 }
             }
         }

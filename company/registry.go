@@ -22,13 +22,13 @@ func (r Registry) ApiRoutes() []core.ApiRouteDefinition {
 }
 
 // findAllCompanies godoc
-// @Summary find all users
+// @Summary find all companies
 // @Schemes
-// @Description do ping
-// @Tags example
+// @Description find all companies
+// @Tags company
 // @Accept json
 // @Produce json
-// @Success 200
+// @Success 200 {object} Company
 // @Router /companies [get]
 func findAllCompanies(ctx *gin.Context) {
 	ctx.JSON(200, []Company{{
