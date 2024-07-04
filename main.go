@@ -2,34 +2,46 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sltet/garage/company"
+	"github.com/sltet/garage/core"
 	_ "github.com/sltet/garage/docs"
+	"github.com/sltet/garage/user"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @BasePath /api/v1
+// @BasePath /
 
-// PingExample godoc
-// @Summary ping example
-// @Schemes
-// @Description do ping
-// @Tags example
-// @Accept json
-// @Produce json
-// @Success 200 {string} Helloworld
-// @Router /ping [get]
-func pong(ctx *gin.Context) {
-	ctx.JSON(200, gin.H{
-		"message": "pong",
-	})
+func getRegistries() []core.AppRegistry {
+	return []core.AppRegistry{
+		user.Registry{},
+		company.Registry{},
+	}
+}
+
+func registerApiRoutes(router *gin.Engine) {
+	for _, registry := range getRegistries() {
+		for _, apiRoute := range registry.ApiRoutes() {
+			if apiRoute.Method == core.GET {
+				router.GET(apiRoute.Path, apiRoute.Handler)
+				continue
+			}
+			if apiRoute.Method == core.POST {
+				router.POST(apiRoute.Path, apiRoute.Handler)
+				continue
+			}
+			if apiRoute.Method == core.DELETE {
+				router.DELETE(apiRoute.Path, apiRoute.Handler)
+				continue
+			}
+		}
+	}
 }
 
 func main() {
 	router := gin.Default()
 
-	router.GET("/ping", func(ctx *gin.Context) {
-		pong(ctx)
-	})
+	registerApiRoutes(router)
 
 	handler := ginSwagger.WrapHandler(swaggerfiles.Handler,
 		ginSwagger.URL("http://localhost:8080/swagger/doc.json"),

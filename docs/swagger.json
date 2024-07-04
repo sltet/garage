@@ -3,9 +3,9 @@
     "info": {
         "contact": {}
     },
-    "basePath": "/api/v1",
+    "basePath": "/",
     "paths": {
-        "/ping": {
+        "/companies": {
             "get": {
                 "description": "do ping",
                 "consumes": [
@@ -17,13 +17,30 @@
                 "tags": [
                     "example"
                 ],
-                "summary": "ping example",
+                "summary": "find all users",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "do ping",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "example"
+                ],
+                "summary": "find all users",
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }

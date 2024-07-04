@@ -1,8 +1,8 @@
-basePath: /api/v1
+basePath: /
 info:
   contact: {}
 paths:
-  /ping:
+  /companies:
     get:
       consumes:
       - application/json
@@ -12,9 +12,20 @@ paths:
       responses:
         "200":
           description: OK
-          schema:
-            type: string
-      summary: ping example
+      summary: find all users
+      tags:
+      - example
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: do ping
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+      summary: find all users
       tags:
       - example
 swagger: "2.0"

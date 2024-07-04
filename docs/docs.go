@@ -15,7 +15,7 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/ping": {
+        "/companies": {
             "get": {
                 "description": "do ping",
                 "consumes": [
@@ -27,13 +27,30 @@ const docTemplate = `{
                 "tags": [
                     "example"
                 ],
-                "summary": "ping example",
+                "summary": "find all users",
                 "responses": {
                     "200": {
-                        "description": "OK",
-                        "schema": {
-                            "type": "string"
-                        }
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "do ping",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "example"
+                ],
+                "summary": "find all users",
+                "responses": {
+                    "200": {
+                        "description": "OK"
                     }
                 }
             }
@@ -45,7 +62,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "",
 	Host:             "",
-	BasePath:         "/api/v1",
+	BasePath:         "/",
 	Schemes:          []string{},
 	Title:            "",
 	Description:      "",
