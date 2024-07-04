@@ -3,6 +3,7 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sltet/garage/core"
+	"go.uber.org/dig"
 )
 
 type Registry struct{}
@@ -11,27 +12,28 @@ func (r Registry) Name() string {
 	return "user"
 }
 
-func (r Registry) ApiRoutes() []core.ApiRouteDefinition {
+func (r Registry) Services(c *dig.Container) {
+	_ = c.Provide(NewController, dig.As(new(ControllerInterface)))
+}
+
+func (r Registry) GetApiRouteDefinitions() []core.ApiRouteDefinition {
 	return []core.ApiRouteDefinition{
 		{
-			Method:  core.GET,
-			Path:    "/users",
-			Handler: findAllUsers,
+			Method: core.GET,
+			Path:   "/users",
+			Handler: func(ctx *gin.Context, handler interface{}) {
+				handler.(ControllerInterface).FindAllUsers(ctx)
+			},
 		},
 	}
 }
 
-// FindAllUsers godoc
-// @Summary find all users
-// @Schemes
-// @Description find all users
-// @Tags user
-// @Accept json
-// @Produce json
-// @Success 200 {object} User
-// @Router /users [get]
-func findAllUsers(ctx *gin.Context) {
-	ctx.JSON(200, []User{
-		NewUser("Steve", "Landry"),
-	})
+func (r Registry) ApiRoutes(c *dig.Container, router *gin.Engine) {
+	for _, apiRoute := range r.GetApiRouteDefinitions() {
+		router.Handle(apiRoute.Method.String(), apiRoute.Path, func(ctx *gin.Context) {
+			_ = c.Invoke(func(handler ControllerInterface) {
+				apiRoute.Handler(ctx, handler)
+			})
+		})
+	}
 }

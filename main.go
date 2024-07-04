@@ -8,6 +8,7 @@ import (
 	"github.com/sltet/garage/user"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"go.uber.org/dig"
 )
 
 // @BasePath /
@@ -19,29 +20,24 @@ func getRegistries() []core.AppRegistry {
 	}
 }
 
-func registerApiRoutes(router *gin.Engine) {
+func registerApiRoutes(ctn *dig.Container, router *gin.Engine) {
 	for _, registry := range getRegistries() {
-		for _, apiRoute := range registry.ApiRoutes() {
-			if apiRoute.Method == core.GET {
-				router.GET(apiRoute.Path, apiRoute.Handler)
-				continue
-			}
-			if apiRoute.Method == core.POST {
-				router.POST(apiRoute.Path, apiRoute.Handler)
-				continue
-			}
-			if apiRoute.Method == core.DELETE {
-				router.DELETE(apiRoute.Path, apiRoute.Handler)
-				continue
-			}
-		}
+		registry.ApiRoutes(ctn, router)
+	}
+}
+
+func registerServices(ctn *dig.Container) {
+	for _, registry := range getRegistries() {
+		registry.Services(ctn)
 	}
 }
 
 func main() {
 	router := gin.Default()
+	ctn := dig.New()
 
-	registerApiRoutes(router)
+	registerServices(ctn)
+	registerApiRoutes(ctn, router)
 
 	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))
 	router.GET("/swagger/*any", handler)

@@ -17,5 +17,5 @@ func (i ApiMethod) String() string {
 type ApiRouteDefinition struct {
 	Method  ApiMethod
 	Path    string
-	Handler func(ctx *gin.Context)
+	Handler func(ctx *gin.Context, handler interface{})
 }
