@@ -1,10 +1,30 @@
 basePath: /
 definitions:
+  appointment.Appointment:
+    properties:
+      customer_id:
+        type: string
+      id:
+        type: string
+      location_id:
+        type: string
+      service_id:
+        type: string
+    type: object
   company.Company:
     properties:
       address_line_1:
         type: string
       address_line_2:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+    type: object
+  servicerequest.ServiceRequest:
+    properties:
+      id:
         type: string
       name:
         type: string
@@ -13,12 +33,47 @@ definitions:
     properties:
       first_name:
         type: string
+      id:
+        type: string
       last_name:
         type: string
+    type: object
+  user.UserCreate:
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+    type: object
+  vehicle.Vehicle:
+    properties:
+      id:
+        type: string
+      make:
+        type: string
+      model:
+        type: string
+      year:
+        type: integer
     type: object
 info:
   contact: {}
 paths:
+  /appointments:
+    get:
+      consumes:
+      - application/json
+      description: find all appointments
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/appointment.Appointment'
+      summary: find all appointments
+      tags:
+      - appointment
   /companies:
     get:
       consumes:
@@ -34,6 +89,21 @@ paths:
       summary: find all companies
       tags:
       - company
+  /services:
+    get:
+      consumes:
+      - application/json
+      description: find all Services
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/servicerequest.ServiceRequest'
+      summary: find all Services
+      tags:
+      - Service
   /users:
     get:
       consumes:
@@ -49,4 +119,44 @@ paths:
       summary: find all users
       tags:
       - user
+    post:
+      consumes:
+      - application/json
+      description: create user
+      parameters:
+      - description: the user to create
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/user.UserCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.User'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: create user
+      tags:
+      - user
+  /vehicles:
+    get:
+      consumes:
+      - application/json
+      description: find all vehicles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/vehicle.Vehicle'
+      summary: find all vehicles
+      tags:
+      - vehicle
 swagger: "2.0"

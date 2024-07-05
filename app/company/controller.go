@@ -5,10 +5,11 @@ import (
 )
 
 type Controller struct {
+	service ServiceInterface
 }
 
-func NewController() *Controller {
-	return &Controller{}
+func NewController(service ServiceInterface) *Controller {
+	return &Controller{service: service}
 }
 
 type ControllerInterface interface {
@@ -25,9 +26,7 @@ type ControllerInterface interface {
 // @Success 200 {object} Company
 // @Router /companies [get]
 func (c Controller) FindAllCompanies(ctx *gin.Context) {
-	ctx.JSON(200, []Company{{
-		Name:         "Landry & Fils",
-		AddressLine1: "2285 rue desmarteau",
-		AddressLine2: "Apt 3",
-	}})
+	ctx.JSON(200, []Company{
+		c.service.CreateCompany("Landry & Fils", "2285 rue desmarteau", "Apt 3"),
+	})
 }

@@ -1,4 +1,4 @@
-package company
+package appointment
 
 import (
 	"github.com/gin-gonic/gin"
@@ -25,12 +25,13 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 		}))
 		return ctrl
 	}
+
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
-			Path:   "/companies",
+			Path:   "/appointments",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
-				controller(c).FindAllCompanies(ctx)
+				controller(c).FindAllAppointments(ctx)
 			},
 		},
 	}

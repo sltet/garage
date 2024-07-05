@@ -2,9 +2,12 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/sltet/garage/app/appointment"
 	"github.com/sltet/garage/app/company"
 	"github.com/sltet/garage/app/core"
+	"github.com/sltet/garage/app/servicerequest"
 	"github.com/sltet/garage/app/user"
+	"github.com/sltet/garage/app/vehicle"
 	_ "github.com/sltet/garage/docs"
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
@@ -17,18 +20,29 @@ func getRegistries() []core.AppRegistry {
 	return []core.AppRegistry{
 		user.Registry{},
 		company.Registry{},
+		vehicle.Registry{},
+		appointment.Registry{},
+		servicerequest.Registry{},
 	}
 }
 
-func registerApiRoutes(ctn *dig.Container, router *gin.Engine) {
+func registerApiRoutes(c *dig.Container, router *gin.Engine) {
 	for _, registry := range getRegistries() {
-		registry.ApiRoutesRegistration(ctn, router)
+		for _, apiRoute := range registry.ApiRouteDefinitions() {
+			router.Handle(apiRoute.Method.String(), apiRoute.Path, NewApiHandler(apiRoute.Handler, c))
+		}
 	}
 }
 
 func registerServices(ctn *dig.Container) {
 	for _, registry := range getRegistries() {
 		registry.ServicesDefinition(ctn)
+	}
+}
+
+func NewApiHandler(apiHandler core.ApiHandler, c *dig.Container) gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		apiHandler(ctx, c)
 	}
 }
 
@@ -39,6 +53,7 @@ func main() {
 	registerServices(ctn)
 	registerApiRoutes(ctn, router)
 
+	router.Use()
 	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))
 	router.GET("/swagger/*any", handler)
 

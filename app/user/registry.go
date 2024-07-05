@@ -13,27 +13,33 @@ func (r Registry) Name() string {
 }
 
 func (r Registry) ServicesDefinition(c *dig.Container) {
-	_ = c.Provide(NewController, dig.As(new(ControllerInterface)))
+	core.PanicOnError(c.Provide(NewController, dig.As(new(ControllerInterface))))
+	core.PanicOnError(c.Provide(NewFactory, dig.As(new(FactoryInterface))))
+	core.PanicOnError(c.Provide(NewService, dig.As(new(ServiceInterface))))
 }
 
 func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
+	controller := func(c *dig.Container) (ctrl ControllerInterface) {
+		core.PanicOnError(c.Invoke(func(handler ControllerInterface) {
+			ctrl = handler
+		}))
+		return ctrl
+	}
+
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
 			Path:   "/users",
-			Handler: func(ctx *gin.Context, handler interface{}) {
-				handler.(ControllerInterface).FindAllUsers(ctx)
+			Handler: func(ctx *gin.Context, c *dig.Container) {
+				controller(c).FindAllUsers(ctx)
 			},
 		},
-	}
-}
-
-func (r Registry) ApiRoutesRegistration(c *dig.Container, router *gin.Engine) {
-	for _, apiRoute := range r.ApiRouteDefinitions() {
-		router.Handle(apiRoute.Method.String(), apiRoute.Path, func(ctx *gin.Context) {
-			_ = c.Invoke(func(handler ControllerInterface) {
-				apiRoute.Handler(ctx, handler)
-			})
-		})
+		{
+			Method: core.POST,
+			Path:   "/users",
+			Handler: func(ctx *gin.Context, c *dig.Container) {
+				controller(c).CreateUser(ctx)
+			},
+		},
 	}
 }
