@@ -16,14 +16,14 @@ type ControllerInterface interface {
 }
 
 // FindAllVehicles godoc
-// @Summary find all vehicles
-// @Schemes
-// @Description find all vehicles
-// @Tags vehicle
-// @Accept json
-// @Produce json
-// @Success 200 {array} Vehicle
-// @Router /vehicles [get]
+//	@Summary	find all vehicles
+//	@Schemes
+//	@Description	find all vehicles
+//	@Tags			vehicle
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}	Vehicle
+//	@Router			/vehicles [get]
 func (c Controller) FindAllVehicles(ctx *gin.Context) {
 	ctx.JSON(200, []Vehicle{
 		NewVehicle("Toyota", "Yaris", 2012),

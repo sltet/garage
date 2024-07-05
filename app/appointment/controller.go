@@ -17,14 +17,14 @@ type ControllerInterface interface {
 }
 
 // FindAllAppointments godoc
-// @Summary find all appointments
-// @Schemes
-// @Description find all appointments
-// @Tags appointment
-// @Accept json
-// @Produce json
-// @Success 200 {array} Appointment
-// @Router /appointments [get]
+//	@Summary	find all appointments
+//	@Schemes
+//	@Description	find all appointments
+//	@Tags			appointment
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{array}	Appointment
+//	@Router			/appointments [get]
 func (c Controller) FindAllAppointments(ctx *gin.Context) {
 	ctx.JSON(200, []Appointment{{
 		ID:         core.GetTimeBasedUUID().String(),
