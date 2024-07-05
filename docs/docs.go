@@ -32,7 +32,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/appointment.Appointment"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/appointment.Appointment"
+                            }
                         }
                     }
                 }
@@ -55,7 +58,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/company.Company"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/company.Company"
+                            }
                         }
                     }
                 }
@@ -78,7 +84,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/servicerequest.ServiceRequest"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/servicerequest.ServiceRequest"
+                            }
                         }
                     }
                 }
@@ -101,7 +110,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/user.User"
+                            }
                         }
                     }
                 }
@@ -162,7 +174,10 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/vehicle.Vehicle"
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/vehicle.Vehicle"
+                            }
                         }
                     }
                 }
@@ -230,6 +245,7 @@ const docTemplate = `{
             }
         },
         "user.UserCreate": {
+            "description": "UserCreate information with user firstname and lastname",
             "type": "object",
             "required": [
                 "first_name",
@@ -237,12 +253,16 @@ const docTemplate = `{
             ],
             "properties": {
                 "first_name": {
+                    "description": "user firstname",
                     "type": "string",
                     "maxLength": 20,
-                    "minLength": 5
+                    "minLength": 5,
+                    "example": "john"
                 },
                 "last_name": {
-                    "type": "string"
+                    "description": "user lastname",
+                    "type": "string",
+                    "example": "doe"
                 }
             }
         },

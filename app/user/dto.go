@@ -1,6 +1,11 @@
 package user
 
+// UserCreate model info
+// @Description UserCreate information
+// @Description with user firstname and lastname
 type UserCreate struct {
-	FirstName string `json:"first_name" binding:"required,min=5,max=20"`
-	LastName  string `json:"last_name" binding:"required"`
+	// user firstname
+	FirstName string `json:"first_name" example:"john" binding:"required,min=5,max=20"`
+	// user lastname
+	LastName string `json:"last_name" example:"doe" binding:"required"`
 }

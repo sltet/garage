@@ -22,7 +22,7 @@ type ControllerInterface interface {
 // @Tags vehicle
 // @Accept json
 // @Produce json
-// @Success 200 {object} Vehicle
+// @Success 200 {array} Vehicle
 // @Router /vehicles [get]
 func (c Controller) FindAllVehicles(ctx *gin.Context) {
 	ctx.JSON(200, []Vehicle{

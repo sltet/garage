@@ -27,7 +27,7 @@ type ControllerInterface interface {
 // @Tags user
 // @Accept json
 // @Produce json
-// @Success 200 {object} User
+// @Success 200 {array} User
 // @Router /users [get]
 func (c Controller) FindAllUsers(ctx *gin.Context) {
 	users := c.service.FindAll(ctx)

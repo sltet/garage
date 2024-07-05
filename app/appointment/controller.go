@@ -23,7 +23,7 @@ type ControllerInterface interface {
 // @Tags appointment
 // @Accept json
 // @Produce json
-// @Success 200 {object} Appointment
+// @Success 200 {array} Appointment
 // @Router /appointments [get]
 func (c Controller) FindAllAppointments(ctx *gin.Context) {
 	ctx.JSON(200, []Appointment{{

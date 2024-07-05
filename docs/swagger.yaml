@@ -39,12 +39,17 @@ definitions:
         type: string
     type: object
   user.UserCreate:
+    description: UserCreate information with user firstname and lastname
     properties:
       first_name:
+        description: user firstname
+        example: john
         maxLength: 20
         minLength: 5
         type: string
       last_name:
+        description: user lastname
+        example: doe
         type: string
     required:
     - first_name
@@ -75,7 +80,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/appointment.Appointment'
+            items:
+              $ref: '#/definitions/appointment.Appointment'
+            type: array
       summary: find all appointments
       tags:
       - appointment
@@ -90,7 +97,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/company.Company'
+            items:
+              $ref: '#/definitions/company.Company'
+            type: array
       summary: find all companies
       tags:
       - company
@@ -105,7 +114,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/servicerequest.ServiceRequest'
+            items:
+              $ref: '#/definitions/servicerequest.ServiceRequest'
+            type: array
       summary: find all Services
       tags:
       - Service
@@ -120,7 +131,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.User'
+            items:
+              $ref: '#/definitions/user.User'
+            type: array
       summary: find all users
       tags:
       - user
@@ -160,7 +173,9 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/vehicle.Vehicle'
+            items:
+              $ref: '#/definitions/vehicle.Vehicle'
+            type: array
       summary: find all vehicles
       tags:
       - vehicle

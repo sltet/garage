@@ -23,7 +23,7 @@ type ControllerInterface interface {
 // @Tags company
 // @Accept json
 // @Produce json
-// @Success 200 {object} Company
+// @Success 200 {array} Company
 // @Router /companies [get]
 func (c Controller) FindAllCompanies(ctx *gin.Context) {
 	ctx.JSON(200, []Company{

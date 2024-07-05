@@ -22,7 +22,7 @@ type ControllerInterface interface {
 // @Tags Service
 // @Accept json
 // @Produce json
-// @Success 200 {object} ServiceRequest
+// @Success 200 {array} ServiceRequest
 // @Router /services [get]
 func (c Controller) FindAllServices(ctx *gin.Context) {
 	ctx.JSON(200, []ServiceRequest{{
