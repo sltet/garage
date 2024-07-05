@@ -45,11 +45,13 @@ definitions:
         description: user firstname
         example: john
         maxLength: 20
-        minLength: 5
+        minLength: 2
         type: string
       last_name:
         description: user lastname
         example: doe
+        maxLength: 20
+        minLength: 2
         type: string
     required:
     - first_name

@@ -256,12 +256,14 @@ const docTemplate = `{
                     "description": "user firstname",
                     "type": "string",
                     "maxLength": 20,
-                    "minLength": 5,
+                    "minLength": 2,
                     "example": "john"
                 },
                 "last_name": {
                     "description": "user lastname",
                     "type": "string",
+                    "maxLength": 20,
+                    "minLength": 2,
                     "example": "doe"
                 }
             }

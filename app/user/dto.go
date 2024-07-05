@@ -5,7 +5,7 @@ package user
 // @Description with user firstname and lastname
 type UserCreate struct {
 	// user firstname
-	FirstName string `json:"first_name" example:"john" binding:"required,min=5,max=20"`
+	FirstName string `json:"first_name" example:"john" binding:"required,min=2,max=20"`
 	// user lastname
-	LastName string `json:"last_name" example:"doe" binding:"required"`
+	LastName string `json:"last_name" example:"doe" binding:"required,min=2,max=20"`
 }
