@@ -23,3 +23,7 @@ type ApiRouteDefinition struct {
 	Path    string
 	Handler func(ctx *gin.Context, c *dig.Container)
 }
+
+type ApiError struct {
+	Error string `json:"error"`
+}

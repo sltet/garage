@@ -2,6 +2,8 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
+	"github.com/go-playground/validator/v10"
 	"github.com/sltet/garage/app/appointment"
 	"github.com/sltet/garage/app/company"
 	"github.com/sltet/garage/app/core"
@@ -46,12 +48,21 @@ func NewApiHandler(apiHandler core.ApiHandler, c *dig.Container) gin.HandlerFunc
 	}
 }
 
+func registerValidations() {
+	for _, registry := range getRegistries() {
+		if v, ok := binding.Validator.Engine().(*validator.Validate); ok {
+			registry.RegisterCustomValidations(v)
+		}
+	}
+}
+
 func main() {
 	router := gin.Default()
 	ctn := dig.New()
 
 	registerServices(ctn)
 	registerApiRoutes(ctn, router)
+	registerValidations()
 
 	router.Use()
 	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))

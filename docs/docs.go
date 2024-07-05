@@ -231,9 +231,15 @@ const docTemplate = `{
         },
         "user.UserCreate": {
             "type": "object",
+            "required": [
+                "first_name",
+                "last_name"
+            ],
             "properties": {
                 "first_name": {
-                    "type": "string"
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 5
                 },
                 "last_name": {
                     "type": "string"

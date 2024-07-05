@@ -49,6 +49,7 @@ func (c Controller) CreateUser(ctx *gin.Context) {
 	user, err := c.service.CreateUser(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
 	}
 	ctx.JSON(200, user)
 }
