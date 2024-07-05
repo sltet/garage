@@ -16,8 +16,6 @@ import (
 	"go.uber.org/dig"
 )
 
-// @BasePath /
-
 func getRegistries() []core.AppRegistry {
 	return []core.AppRegistry{
 		user.Registry{},
@@ -56,6 +54,12 @@ func registerValidations() {
 	}
 }
 
+// @BasePath /
+// @contact.name   Steve Landry Tene
+// @contact.email  steve.landry@cloudpit.ca
+
+// @license.name  Apache 2.0
+// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
 	router := gin.Default()
 	ctn := dig.New()

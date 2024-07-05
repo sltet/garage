@@ -69,7 +69,12 @@ definitions:
         type: integer
     type: object
 info:
-  contact: {}
+  contact:
+    email: steve.landry@cloudpit.ca
+    name: Steve Landry Tene
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 paths:
   /appointments:
     get:
