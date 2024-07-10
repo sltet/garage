@@ -7,9 +7,9 @@ func NewFactory() *Factory {
 }
 
 type FactoryInterface interface {
-	Create(name, addressLine1, addressLine2 string) Company
+	Create(company CompanyCreate) Company
 }
 
-func (f Factory) Create(name, addressLine1, addressLine2 string) Company {
-	return NewCompany(name, addressLine1, addressLine2)
+func (f Factory) Create(company CompanyCreate) Company {
+	return NewCompany(company.Name, company.AddressLine1, company.AddressLine2)
 }

@@ -44,7 +44,7 @@ func registerServices(ctn *dig.Container) {
 
 func schemaMigration(ctn *dig.Container) {
 	for _, registry := range getRegistries() {
-		ctn.Invoke(func(db db.DatabaseInterface) {
+		ctn.Invoke(func(db db.EntityManagerInterface) {
 			registry.SqlSchemaMigration(db.Database())
 		})
 	}

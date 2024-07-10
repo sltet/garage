@@ -19,3 +19,7 @@ func NewCompany(name, addressLine1, addressLine2 string) Company {
 		AddressLine2: addressLine2,
 	}
 }
+
+func (c Company) GetID() string {
+	return c.ID
+}

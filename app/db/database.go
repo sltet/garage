@@ -11,7 +11,7 @@ type Database struct {
 	db *gorm.DB
 }
 
-type DatabaseInterface interface {
+type EntityManagerInterface interface {
 	Database() *gorm.DB
 }
 

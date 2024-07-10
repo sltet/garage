@@ -19,3 +19,7 @@ func NewAppointment(customerID, locationID, serviceID string) Appointment {
 		ServiceID:  serviceID,
 	}
 }
+
+func (a Appointment) GetID() string {
+	return a.ID
+}

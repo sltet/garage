@@ -56,8 +56,11 @@ func (c Controller) CreateUser(ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&u); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	user := c.service.CreateUser(ctx, u)
-	ctx.JSON(200, user)
+	user, err := c.service.CreateUser(ctx, u)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+	ctx.JSON(http.StatusCreated, user)
 }
 
 // UpdateUser godoc
@@ -78,6 +81,9 @@ func (c Controller) UpdateUser(ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&u); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 	}
-	user := c.service.UpdateUser(ctx, ctx.Param("id"), u)
+	user, err := c.service.UpdateUser(ctx, ctx.Param("id"), u)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
 	ctx.JSON(200, user)
 }

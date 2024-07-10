@@ -10,8 +10,8 @@ type Service struct {
 }
 
 type ServiceInterface interface {
-	CreateUser(ctx *gin.Context, u UserCreate) User
-	UpdateUser(ctx *gin.Context, userId string, u UserUpdate) User
+	CreateUser(ctx *gin.Context, u UserCreate) (user User, err error)
+	UpdateUser(ctx *gin.Context, id string, u UserUpdate) (user User, err error)
 	FindAll(ctx *gin.Context) ([]User, error)
 }
 
@@ -23,10 +23,24 @@ func (s Service) FindAll(ctx *gin.Context) ([]User, error) {
 	return s.repository.FindAll(ctx)
 }
 
-func (s *Service) CreateUser(ctx *gin.Context, u UserCreate) (user User) {
-	return s.factory.CreateUser(ctx, u)
+func (s Service) FindById(ctx *gin.Context, id string) (User, error) {
+	return s.repository.FindById(ctx, id)
 }
 
-func (s *Service) UpdateUser(ctx *gin.Context, id string, u UserUpdate) (user User) {
-	return s.factory.UpdateUser(ctx, User{ID: id}, u)
+func (s Service) CreateUser(ctx *gin.Context, u UserCreate) (user User, err error) {
+	user = s.factory.CreateUser(ctx, u)
+	user, err = s.repository.Create(ctx, user)
+	if err != nil {
+		return user, err
+	}
+	return user, nil
+}
+
+func (s Service) UpdateUser(ctx *gin.Context, id string, u UserUpdate) (user User, err error) {
+	user, err = s.repository.FindById(ctx, id)
+	if err != nil {
+		return user, err
+	}
+	updatedUser := s.factory.UpdateUser(ctx, user, u)
+	return s.repository.Save(ctx, updatedUser)
 }

@@ -31,6 +31,8 @@ definitions:
     type: object
   user.User:
     properties:
+      email:
+        type: string
       first_name:
         type: string
       id:
@@ -41,37 +43,41 @@ definitions:
   user.UserCreate:
     description: UserCreate information with user firstname and lastname
     properties:
+      email:
+        example: john@doe.com
+        type: string
       first_name:
-        description: user firstname
         example: john
         maxLength: 20
         minLength: 2
         type: string
       last_name:
-        description: user lastname
         example: doe
         maxLength: 20
         minLength: 2
         type: string
     required:
+    - email
     - first_name
     - last_name
     type: object
   user.UserUpdate:
     properties:
+      email:
+        example: john@doe.com
+        type: string
       first_name:
-        description: user firstname
         example: john
         maxLength: 20
         minLength: 2
         type: string
       last_name:
-        description: user lastname
         example: doe
         maxLength: 20
         minLength: 2
         type: string
     required:
+    - email
     - first_name
     - last_name
     type: object

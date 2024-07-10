@@ -2,6 +2,7 @@ package company
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type Controller struct {
@@ -17,6 +18,7 @@ type ControllerInterface interface {
 }
 
 // FindAllCompanies godoc
+//
 //	@Summary	find all companies
 //	@Schemes
 //	@Description	find all companies
@@ -26,7 +28,9 @@ type ControllerInterface interface {
 //	@Success		200	{array}	Company
 //	@Router			/companies [get]
 func (c Controller) FindAllCompanies(ctx *gin.Context) {
-	ctx.JSON(200, []Company{
-		c.service.CreateCompany("Landry & Fils", "2285 rue desmarteau", "Apt 3"),
-	})
+	companies, err := c.service.FindAll(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	}
+	ctx.JSON(200, companies)
 }

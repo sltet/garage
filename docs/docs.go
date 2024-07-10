@@ -287,6 +287,9 @@ const docTemplate = `{
         "user.User": {
             "type": "object",
             "properties": {
+                "email": {
+                    "type": "string"
+                },
                 "first_name": {
                     "type": "string"
                 },
@@ -302,19 +305,22 @@ const docTemplate = `{
             "description": "UserCreate information with user firstname and lastname",
             "type": "object",
             "required": [
+                "email",
                 "first_name",
                 "last_name"
             ],
             "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john@doe.com"
+                },
                 "first_name": {
-                    "description": "user firstname",
                     "type": "string",
                     "maxLength": 20,
                     "minLength": 2,
                     "example": "john"
                 },
                 "last_name": {
-                    "description": "user lastname",
                     "type": "string",
                     "maxLength": 20,
                     "minLength": 2,
@@ -325,19 +331,22 @@ const docTemplate = `{
         "user.UserUpdate": {
             "type": "object",
             "required": [
+                "email",
                 "first_name",
                 "last_name"
             ],
             "properties": {
+                "email": {
+                    "type": "string",
+                    "example": "john@doe.com"
+                },
                 "first_name": {
-                    "description": "user firstname",
                     "type": "string",
                     "maxLength": 20,
                     "minLength": 2,
                     "example": "john"
                 },
                 "last_name": {
-                    "description": "user lastname",
                     "type": "string",
                     "maxLength": 20,
                     "minLength": 2,

@@ -10,11 +10,12 @@ import (
 type Registry struct{}
 
 func (r Registry) Name() string {
-	return "db"
+	return "EntityManager"
 }
 
 func (r Registry) ServicesDefinition(c *dig.Container) {
-	core.PanicOnError(c.Provide(NewDatabase, dig.As(new(DatabaseInterface))))
+	core.PanicOnError(c.Provide(NewDatabase, dig.As(new(EntityManagerInterface))))
+	core.PanicOnError(c.Provide(NewCrudRepository, dig.As(new(CrudRepositoryInterface))))
 }
 
 func (r Registry) SqlSchemaMigration(db *gorm.DB) {}

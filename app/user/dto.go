@@ -4,16 +4,14 @@ package user
 // @Description UserCreate information
 // @Description with user firstname and lastname
 type UserCreate struct {
-	// user firstname
 	FirstName string `json:"first_name" example:"john" binding:"required,min=2,max=20"`
-	// user lastname
-	LastName string `json:"last_name" example:"doe" binding:"required,min=2,max=20"`
+	LastName  string `json:"last_name" example:"doe" binding:"required,min=2,max=20"`
+	Email     string `json:"email" example:"john@doe.com" binding:"required,email"`
 }
 
 // UserUpdate model info
 type UserUpdate struct {
-	// user firstname
 	FirstName string `json:"first_name" example:"john" binding:"required,min=2,max=20"`
-	// user lastname
-	LastName string `json:"last_name" example:"doe" binding:"required,min=2,max=20"`
+	LastName  string `json:"last_name" example:"doe" binding:"required,min=2,max=20"`
+	Email     string `json:"email" example:"john@doe.com" binding:"required,email"`
 }

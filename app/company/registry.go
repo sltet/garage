@@ -18,6 +18,7 @@ func (r Registry) ServicesDefinition(c *dig.Container) {
 	core.PanicOnError(c.Provide(NewController, dig.As(new(ControllerInterface))))
 	core.PanicOnError(c.Provide(NewFactory, dig.As(new(FactoryInterface))))
 	core.PanicOnError(c.Provide(NewService, dig.As(new(ServiceInterface))))
+	core.PanicOnError(c.Provide(NewRepository, dig.As(new(RepositoryInterface))))
 }
 
 func (r Registry) SqlSchemaMigration(db *gorm.DB) {

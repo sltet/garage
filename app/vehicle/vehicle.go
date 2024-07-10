@@ -19,3 +19,7 @@ func NewVehicle(make string, model string, year int) Vehicle {
 		year,
 	}
 }
+
+func (c Vehicle) GetID() string {
+	return c.ID
+}

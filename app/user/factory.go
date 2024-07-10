@@ -16,7 +16,7 @@ type FactoryInterface interface {
 }
 
 func (f Factory) convert(user UserCreate) User {
-	return NewUser(user.FirstName, user.LastName)
+	return NewUser(user.FirstName, user.LastName, user.Email)
 }
 
 func (f Factory) CreateUser(_ *gin.Context, u UserCreate) (user User) {
@@ -26,5 +26,6 @@ func (f Factory) CreateUser(_ *gin.Context, u UserCreate) (user User) {
 func (f Factory) UpdateUser(_ *gin.Context, user User, u UserUpdate) User {
 	user.FirstName = u.FirstName
 	user.LastName = u.LastName
+	user.Email = u.Email
 	return user
 }
