@@ -5,6 +5,7 @@ import (
 	"github.com/go-playground/validator/v10"
 	"github.com/sltet/garage/app/core"
 	"go.uber.org/dig"
+	"gorm.io/gorm"
 )
 
 type Registry struct{}
@@ -15,6 +16,10 @@ func (r Registry) Name() string {
 
 func (r Registry) ServicesDefinition(c *dig.Container) {
 	core.PanicOnError(c.Provide(NewController, dig.As(new(ControllerInterface))))
+}
+
+func (r Registry) SqlSchemaMigration(db *gorm.DB) {
+	db.AutoMigrate(&ServiceRequest{})
 }
 
 func (r Registry) RegisterCustomValidations(validator *validator.Validate) {
@@ -32,7 +37,7 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
-			Path:   "/services",
+			Path:   "/service-requests",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
 				controller(c).FindAllServices(ctx)
 			},

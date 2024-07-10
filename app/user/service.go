@@ -2,33 +2,31 @@ package user
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/sltet/garage/app/core"
 )
 
 type Service struct {
-	factory FactoryInterface
+	factory    FactoryInterface
+	repository RepositoryInterface
 }
 
 type ServiceInterface interface {
-	CreateUser(ctx *gin.Context) (User, error)
-	FindAll(ctx *gin.Context) []User
+	CreateUser(ctx *gin.Context, u UserCreate) User
+	UpdateUser(ctx *gin.Context, userId string, u UserUpdate) User
+	FindAll(ctx *gin.Context) ([]User, error)
 }
 
-func NewService(factory FactoryInterface) *Service {
-	return &Service{factory: factory}
+func NewService(factory FactoryInterface, repository RepositoryInterface) *Service {
+	return &Service{factory: factory, repository: repository}
 }
 
-func (s *Service) FindAll(ctx *gin.Context) []User {
-	return []User{
-		NewUser("steve", "landry"),
-	}
+func (s Service) FindAll(ctx *gin.Context) ([]User, error) {
+	return s.repository.FindAll(ctx)
 }
 
-func (s *Service) CreateUser(ctx *gin.Context) (user User, err error) {
-	user, err = s.factory.CreateUser(ctx)
-	if err != nil {
-		return user, err
-	}
-	user.ID = core.GetTimeBasedUUID().String()
-	return user, err
+func (s *Service) CreateUser(ctx *gin.Context, u UserCreate) (user User) {
+	return s.factory.CreateUser(ctx, u)
+}
+
+func (s *Service) UpdateUser(ctx *gin.Context, id string, u UserUpdate) (user User) {
+	return s.factory.UpdateUser(ctx, User{ID: id}, u)
 }

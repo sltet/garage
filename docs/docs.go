@@ -74,9 +74,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/services": {
+        "/service-requests": {
             "get": {
-                "description": "find all Services",
+                "description": "find all services requests",
                 "consumes": [
                     "application/json"
                 ],
@@ -84,9 +84,9 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "Service"
+                    "service request"
                 ],
-                "summary": "find all Services",
+                "summary": "find all service requests",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -145,6 +145,53 @@ const docTemplate = `{
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/user.UserCreate"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/user.User"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "put": {
+                "description": "update user",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "update user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the user id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "the user to update",
+                        "name": "user",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/user.UserUpdate"
                         }
                     }
                 ],
@@ -253,6 +300,29 @@ const docTemplate = `{
         },
         "user.UserCreate": {
             "description": "UserCreate information with user firstname and lastname",
+            "type": "object",
+            "required": [
+                "first_name",
+                "last_name"
+            ],
+            "properties": {
+                "first_name": {
+                    "description": "user firstname",
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 2,
+                    "example": "john"
+                },
+                "last_name": {
+                    "description": "user lastname",
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 2,
+                    "example": "doe"
+                }
+            }
+        },
+        "user.UserUpdate": {
             "type": "object",
             "required": [
                 "first_name",

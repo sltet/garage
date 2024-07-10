@@ -7,6 +7,7 @@ import (
 	"github.com/sltet/garage/app/appointment"
 	"github.com/sltet/garage/app/company"
 	"github.com/sltet/garage/app/core"
+	"github.com/sltet/garage/app/db"
 	"github.com/sltet/garage/app/servicerequest"
 	"github.com/sltet/garage/app/user"
 	"github.com/sltet/garage/app/vehicle"
@@ -18,6 +19,7 @@ import (
 
 func getRegistries() []core.AppRegistry {
 	return []core.AppRegistry{
+		db.Registry{},
 		user.Registry{},
 		company.Registry{},
 		vehicle.Registry{},
@@ -40,6 +42,14 @@ func registerServices(ctn *dig.Container) {
 	}
 }
 
+func schemaMigration(ctn *dig.Container) {
+	for _, registry := range getRegistries() {
+		ctn.Invoke(func(db db.DatabaseInterface) {
+			registry.SqlSchemaMigration(db.Database())
+		})
+	}
+}
+
 func NewApiHandler(apiHandler core.ApiHandler, c *dig.Container) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		apiHandler(ctx, c)
@@ -54,18 +64,19 @@ func registerValidations() {
 	}
 }
 
-// @BasePath /
-// @contact.name   Steve Landry Tene
-// @contact.email  steve.landry@cloudpit.ca
+//	@BasePath		/
+//	@contact.name	Steve Landry Tene
+//	@contact.email	steve.landry@cloudpit.ca
 
-// @license.name  Apache 2.0
-// @license.url   http://www.apache.org/licenses/LICENSE-2.0.html
+// @license.name	Apache 2.0
+// @license.url	http://www.apache.org/licenses/LICENSE-2.0.html
 func main() {
 	router := gin.Default()
 	ctn := dig.New()
 
 	registerServices(ctn)
 	registerApiRoutes(ctn, router)
+	schemaMigration(ctn)
 	registerValidations()
 
 	router.Use()

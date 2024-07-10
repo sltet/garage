@@ -5,7 +5,7 @@ import (
 )
 
 type Vehicle struct {
-	ID    string `json:"id"`
+	ID    string `json:"id" gorm:"primaryKey"`
 	Make  string `json:"make"`
 	Model string `json:"model"`
 	Year  int    `json:"year"`

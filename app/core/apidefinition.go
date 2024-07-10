@@ -8,6 +8,8 @@ import (
 const (
 	GET    ApiMethod = "GET"
 	POST   ApiMethod = "POST"
+	PUT    ApiMethod = "PUT"
+	PATCH  ApiMethod = "PATCH"
 	DELETE ApiMethod = "DELETE"
 )
 

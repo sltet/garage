@@ -5,7 +5,7 @@ import (
 )
 
 type Appointment struct {
-	ID         string `json:"id"`
+	ID         string `json:"id" gorm:"primaryKey"`
 	CustomerID string `json:"customer_id"`
 	LocationID string `json:"location_id"`
 	ServiceID  string `json:"service_id"`

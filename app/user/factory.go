@@ -11,17 +11,20 @@ func NewFactory() *Factory {
 }
 
 type FactoryInterface interface {
-	CreateUser(ctx *gin.Context) (user User, err error)
+	CreateUser(ctx *gin.Context, u UserCreate) (user User)
+	UpdateUser(ctx *gin.Context, user User, u UserUpdate) User
 }
 
 func (f Factory) convert(user UserCreate) User {
 	return NewUser(user.FirstName, user.LastName)
 }
 
-func (f Factory) CreateUser(ctx *gin.Context) (user User, err error) {
-	var u UserCreate
-	if err := ctx.ShouldBindJSON(&u); err != nil {
-		return user, err
-	}
-	return f.convert(u), nil
+func (f Factory) CreateUser(_ *gin.Context, u UserCreate) (user User) {
+	return f.convert(u)
+}
+
+func (f Factory) UpdateUser(_ *gin.Context, user User, u UserUpdate) User {
+	user.FirstName = u.FirstName
+	user.LastName = u.LastName
+	return user
 }
