@@ -194,6 +194,26 @@ paths:
       tags:
       - user
   /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: find user by id
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/user.User'
+      summary: find user by id
+      tags:
+      - user
     put:
       consumes:
       - application/json

@@ -45,6 +45,13 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 			},
 		},
 		{
+			Method: core.GET,
+			Path:   "/users/:id",
+			Handler: func(ctx *gin.Context, c *dig.Container) {
+				controller(c).FindById(ctx)
+			},
+		},
+		{
 			Method: core.POST,
 			Path:   "/users",
 			Handler: func(ctx *gin.Context, c *dig.Container) {

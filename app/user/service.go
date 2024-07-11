@@ -13,6 +13,7 @@ type ServiceInterface interface {
 	CreateUser(ctx *gin.Context, u UserCreate) (user User, err error)
 	UpdateUser(ctx *gin.Context, id string, u UserUpdate) (user User, err error)
 	FindAll(ctx *gin.Context) ([]User, error)
+	FindById(ctx *gin.Context, id string) (User, error)
 }
 
 func NewService(factory FactoryInterface, repository RepositoryInterface) *Service {
