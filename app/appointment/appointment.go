@@ -5,7 +5,7 @@ import (
 )
 
 type Appointment struct {
-	ID         string `json:"id" gorm:"primaryKey"`
+	core.Entity
 	CustomerID string `json:"customer_id"`
 	LocationID string `json:"location_id"`
 	ServiceID  string `json:"service_id"`
@@ -13,13 +13,9 @@ type Appointment struct {
 
 func NewAppointment(customerID, locationID, serviceID string) Appointment {
 	return Appointment{
-		ID:         core.GetTimeBasedUUID().String(),
+		Entity:     core.NewEntity(),
 		CustomerID: customerID,
 		LocationID: locationID,
 		ServiceID:  serviceID,
 	}
-}
-
-func (a Appointment) GetID() string {
-	return a.ID
 }

@@ -17,6 +17,7 @@ type ControllerInterface interface {
 }
 
 // FindAllAppointments godoc
+//
 //	@Summary	find all appointments
 //	@Schemes
 //	@Description	find all appointments
@@ -27,7 +28,7 @@ type ControllerInterface interface {
 //	@Router			/appointments [get]
 func (c Controller) FindAllAppointments(ctx *gin.Context) {
 	ctx.JSON(200, []Appointment{{
-		ID:         core.GetTimeBasedUUID().String(),
+		Entity:     core.NewEntity(),
 		LocationID: "1",
 		ServiceID:  "1",
 	}})

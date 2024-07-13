@@ -74,6 +74,64 @@ const docTemplate = `{
                 }
             }
         },
+        "/companies/{id}": {
+            "get": {
+                "description": "find by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "company"
+                ],
+                "summary": "find by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the user to create",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/company.Company"
+                        }
+                    }
+                }
+            }
+        },
+        "/operations": {
+            "get": {
+                "description": "find all garage operations",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "operation"
+                ],
+                "summary": "find all garage operations",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/operation.ServiceOperation"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/service-requests": {
             "get": {
                 "description": "find all services requests",
@@ -272,6 +330,10 @@ const docTemplate = `{
         "appointment.Appointment": {
             "type": "object",
             "properties": {
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
                 "customer_id": {
                     "type": "string"
                 },
@@ -282,6 +344,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "service_id": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
                     "type": "string"
                 }
             }
@@ -295,10 +361,74 @@ const docTemplate = `{
                 "address_line_2": {
                     "type": "string"
                 },
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
+                    "type": "string"
+                }
+            }
+        },
+        "core.LocalizedMessage": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "string"
+            }
+        },
+        "operation.Operation": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
+                "description": {
+                    "$ref": "#/definitions/core.LocalizedMessage"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "$ref": "#/definitions/core.LocalizedMessage"
+                },
+                "service_operation_id": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
+                    "type": "string"
+                }
+            }
+        },
+        "operation.ServiceOperation": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "$ref": "#/definitions/core.LocalizedMessage"
+                },
+                "operations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/operation.Operation"
+                    }
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
                     "type": "string"
                 }
             }
@@ -306,10 +436,18 @@ const docTemplate = `{
         "servicerequest.ServiceRequest": {
             "type": "object",
             "properties": {
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
                 "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
                     "type": "string"
                 }
             }
@@ -317,6 +455,10 @@ const docTemplate = `{
         "user.User": {
             "type": "object",
             "properties": {
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
                 "email": {
                     "type": "string"
                 },
@@ -327,6 +469,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "last_name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
                     "type": "string"
                 }
             }
@@ -387,6 +533,10 @@ const docTemplate = `{
         "vehicle.Vehicle": {
             "type": "object",
             "properties": {
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
                 "id": {
                     "type": "string"
                 },
@@ -394,6 +544,10 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "model": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
                     "type": "string"
                 },
                 "year": {

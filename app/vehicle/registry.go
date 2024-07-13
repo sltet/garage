@@ -19,7 +19,7 @@ func (r Registry) ServicesDefinition(c *dig.Container) {
 }
 
 func (r Registry) SqlSchemaMigration(db *gorm.DB) {
-	db.AutoMigrate(&Vehicle{})
+	core.PanicOnError(db.AutoMigrate(&Vehicle{}))
 }
 
 func (r Registry) RegisterCustomValidations(validator *validator.Validate) {

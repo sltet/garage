@@ -5,7 +5,7 @@ import (
 )
 
 type Company struct {
-	ID           string `json:"id" gorm:"primaryKey"`
+	core.Entity
 	Name         string `json:"name"`
 	AddressLine1 string `json:"address_line_1"`
 	AddressLine2 string `json:"address_line_2"`
@@ -13,13 +13,9 @@ type Company struct {
 
 func NewCompany(name, addressLine1, addressLine2 string) Company {
 	return Company{
-		ID:           core.GetTimeBasedUUID().String(),
+		Entity:       core.NewEntity(),
 		Name:         name,
 		AddressLine1: addressLine1,
 		AddressLine2: addressLine2,
 	}
-}
-
-func (c Company) GetID() string {
-	return c.ID
 }

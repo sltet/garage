@@ -8,6 +8,7 @@ import (
 	"github.com/sltet/garage/app/company"
 	"github.com/sltet/garage/app/core"
 	"github.com/sltet/garage/app/db"
+	"github.com/sltet/garage/app/operation"
 	"github.com/sltet/garage/app/servicerequest"
 	"github.com/sltet/garage/app/user"
 	"github.com/sltet/garage/app/vehicle"
@@ -22,6 +23,7 @@ func getRegistries() []core.AppRegistry {
 		db.Registry{},
 		user.Registry{},
 		company.Registry{},
+		operation.Registry{},
 		vehicle.Registry{},
 		appointment.Registry{},
 		servicerequest.Registry{},

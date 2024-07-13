@@ -1,10 +1,15 @@
 package servicerequest
 
+import "github.com/sltet/garage/app/core"
+
 type ServiceRequest struct {
-	ID   string `json:"id" gorm:"primaryKey"`
+	core.Entity
 	Name string `json:"name"`
 }
 
-func (c ServiceRequest) GetID() string {
-	return c.ID
+func NewServiceRequest(name string) ServiceRequest {
+	return ServiceRequest{
+		core.NewEntity(),
+		name,
+	}
 }

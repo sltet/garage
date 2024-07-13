@@ -5,7 +5,7 @@ import (
 )
 
 type Vehicle struct {
-	ID    string `json:"id" gorm:"primaryKey"`
+	core.Entity
 	Make  string `json:"make"`
 	Model string `json:"model"`
 	Year  int    `json:"year"`
@@ -13,13 +13,9 @@ type Vehicle struct {
 
 func NewVehicle(make string, model string, year int) Vehicle {
 	return Vehicle{
-		core.GetTimeBasedUUID().String(),
+		core.NewEntity(),
 		make,
 		model,
 		year,
 	}
-}
-
-func (c Vehicle) GetID() string {
-	return c.ID
 }

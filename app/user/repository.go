@@ -43,10 +43,9 @@ func (r Repository) FindById(ctx *gin.Context, id string) (User, error) {
 }
 
 func (r Repository) Create(ctx *gin.Context, u User) (User, error) {
-	var user User
-	err := r.crudRepository.Create(ctx, u)
+	err := r.crudRepository.Create(ctx, &u)
 	if err != nil {
-		return user, err
+		return u, err
 	}
 	return u, nil
 }

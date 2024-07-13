@@ -1,4 +1,4 @@
-package servicerequest
+package operation
 
 import (
 	"github.com/gin-gonic/gin"
@@ -11,15 +11,19 @@ import (
 type Registry struct{}
 
 func (r Registry) Name() string {
-	return "company"
+	return "operation"
 }
 
 func (r Registry) ServicesDefinition(c *dig.Container) {
 	core.PanicOnError(c.Provide(NewController, dig.As(new(ControllerInterface))))
+	core.PanicOnError(c.Provide(NewService, dig.As(new(ServiceInterface))))
+	core.PanicOnError(c.Provide(NewRepository, dig.As(new(RepositoryInterface))))
 }
 
 func (r Registry) SqlSchemaMigration(db *gorm.DB) {
-	core.PanicOnError(db.AutoMigrate(&ServiceRequest{}))
+	core.PanicOnError(db.AutoMigrate(&ServiceOperation{}))
+	core.PanicOnError(db.AutoMigrate(&Operation{}))
+	Migration001{}.Up(db)
 }
 
 func (r Registry) RegisterCustomValidations(validator *validator.Validate) {
@@ -37,9 +41,9 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
-			Path:   "/service-requests",
+			Path:   "/operations",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
-				controller(c).FindAllServices(ctx)
+				controller(c).FindAllOperations(ctx)
 			},
 		},
 	}

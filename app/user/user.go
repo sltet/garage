@@ -5,7 +5,7 @@ import (
 )
 
 type User struct {
-	ID        string `json:"id" gorm:"primaryKey"`
+	core.Entity
 	FirstName string `json:"first_name"`
 	LastName  string `json:"last_name"`
 	Email     string `json:"email"`
@@ -13,13 +13,9 @@ type User struct {
 
 func NewUser(firstName string, lastName string, email string) User {
 	return User{
-		core.GetTimeBasedUUID().String(),
+		core.NewEntity(),
 		firstName,
 		lastName,
 		email,
 	}
-}
-
-func (c User) GetID() string {
-	return c.ID
 }

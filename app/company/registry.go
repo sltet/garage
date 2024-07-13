@@ -22,7 +22,7 @@ func (r Registry) ServicesDefinition(c *dig.Container) {
 }
 
 func (r Registry) SqlSchemaMigration(db *gorm.DB) {
-	db.AutoMigrate(&Company{})
+	core.PanicOnError(db.AutoMigrate(&Company{}))
 }
 
 func (r Registry) RegisterCustomValidations(validator *validator.Validate) {
@@ -42,6 +42,13 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 			Path:   "/companies",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
 				controller(c).FindAllCompanies(ctx)
+			},
+		},
+		{
+			Method: core.GET,
+			Path:   "/companies/:id",
+			Handler: func(ctx *gin.Context, c *dig.Container) {
+				controller(c).FindById(ctx)
 			},
 		},
 	}

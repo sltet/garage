@@ -10,6 +10,7 @@ type Service struct {
 type ServiceInterface interface {
 	CreateCompany(ctx *gin.Context, company CompanyCreate) (Company, error)
 	FindAll(ctx *gin.Context) ([]Company, error)
+	FindById(ctx *gin.Context, id string) (Company, error)
 }
 
 func NewService(factory FactoryInterface, repository RepositoryInterface) *Service {
@@ -23,6 +24,10 @@ func (s *Service) CreateCompany(ctx *gin.Context, company CompanyCreate) (Compan
 
 func (s *Service) FindAll(ctx *gin.Context) ([]Company, error) {
 	return s.repository.FindAll(ctx)
+}
+
+func (s *Service) FindById(ctx *gin.Context, id string) (Company, error) {
+	return s.repository.FindById(ctx, id)
 }
 
 func (s *Service) Create(ctx *gin.Context) ([]Company, error) {
