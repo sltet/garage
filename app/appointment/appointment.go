@@ -9,7 +9,7 @@ type Appointment struct {
 	CustomerID string `json:"customer_id"`
 	LocationID string `json:"location_id"`
 	ServiceID  string `json:"service_id"`
-}
+} //@name Appointment
 
 func NewAppointment(customerID, locationID, serviceID string) Appointment {
 	return Appointment{

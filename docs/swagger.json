@@ -31,7 +31,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/appointment.Appointment"
+                                "$ref": "#/definitions/Appointment"
                             }
                         }
                     }
@@ -115,7 +115,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/operation.ServiceOperation"
+                                "$ref": "#/definitions/ServiceOperation"
                             }
                         }
                     }
@@ -148,7 +148,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/operation.ServiceOperation"
+                            "$ref": "#/definitions/ServiceOperation"
                         }
                     }
                 }
@@ -173,7 +173,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/servicerequest.ServiceRequest"
+                                "$ref": "#/definitions/ServiceRequest"
                             }
                         }
                     }
@@ -199,7 +199,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/user.User"
+                                "$ref": "#/definitions/User"
                             }
                         }
                     }
@@ -224,7 +224,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.UserCreate"
+                            "$ref": "#/definitions/UserCreate"
                         }
                     }
                 ],
@@ -232,7 +232,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
@@ -270,7 +270,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "$ref": "#/definitions/User"
                         }
                     }
                 }
@@ -301,7 +301,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.UserUpdate"
+                            "$ref": "#/definitions/UserUpdate"
                         }
                     }
                 ],
@@ -309,7 +309,7 @@
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
@@ -340,7 +340,7 @@
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/vehicle.Vehicle"
+                                "$ref": "#/definitions/Vehicle"
                             }
                         }
                     }
@@ -349,7 +349,7 @@
         }
     },
     "definitions": {
-        "appointment.Appointment": {
+        "Appointment": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -374,38 +374,13 @@
                 }
             }
         },
-        "company.Company": {
-            "type": "object",
-            "properties": {
-                "address_line_1": {
-                    "type": "string"
-                },
-                "address_line_2": {
-                    "type": "string"
-                },
-                "createdAt": {
-                    "description": "Automatically managed by GORM for creation time",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "description": "Automatically managed by GORM for update time",
-                    "type": "string"
-                }
-            }
-        },
-        "core.LocalizedMessage": {
+        "LocalizedMessage": {
             "type": "object",
             "additionalProperties": {
                 "type": "string"
             }
         },
-        "operation.Operation": {
+        "Operation": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -413,13 +388,13 @@
                     "type": "string"
                 },
                 "description": {
-                    "$ref": "#/definitions/core.LocalizedMessage"
+                    "$ref": "#/definitions/LocalizedMessage"
                 },
                 "id": {
                     "type": "string"
                 },
                 "name": {
-                    "$ref": "#/definitions/core.LocalizedMessage"
+                    "$ref": "#/definitions/LocalizedMessage"
                 },
                 "service_operation_id": {
                     "type": "string"
@@ -430,7 +405,7 @@
                 }
             }
         },
-        "operation.ServiceOperation": {
+        "ServiceOperation": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -441,12 +416,12 @@
                     "type": "string"
                 },
                 "name": {
-                    "$ref": "#/definitions/core.LocalizedMessage"
+                    "$ref": "#/definitions/LocalizedMessage"
                 },
                 "operations": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/operation.Operation"
+                        "$ref": "#/definitions/Operation"
                     }
                 },
                 "updatedAt": {
@@ -455,7 +430,7 @@
                 }
             }
         },
-        "servicerequest.ServiceRequest": {
+        "ServiceRequest": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -474,7 +449,7 @@
                 }
             }
         },
-        "user.User": {
+        "User": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -499,7 +474,7 @@
                 }
             }
         },
-        "user.UserCreate": {
+        "UserCreate": {
             "description": "UserCreate information with user firstname and lastname",
             "type": "object",
             "required": [
@@ -526,7 +501,7 @@
                 }
             }
         },
-        "user.UserUpdate": {
+        "UserUpdate": {
             "type": "object",
             "required": [
                 "email",
@@ -552,7 +527,7 @@
                 }
             }
         },
-        "vehicle.Vehicle": {
+        "Vehicle": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -574,6 +549,31 @@
                 },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "company.Company": {
+            "type": "object",
+            "properties": {
+                "address_line_1": {
+                    "type": "string"
+                },
+                "address_line_2": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
+                    "type": "string"
                 }
             }
         }

@@ -8,7 +8,7 @@ type ServiceOperation struct {
 	core.Entity
 	Name       core.LocalizedMessage `json:"name"`
 	Operations []Operation           `json:"operations" gorm:"foreignKey:ServiceOperationId"`
-}
+} //@name ServiceOperation
 
 func NewServiceOperation(name core.LocalizedMessage) ServiceOperation {
 	return ServiceOperation{

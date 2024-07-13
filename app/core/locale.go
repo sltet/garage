@@ -13,7 +13,7 @@ const (
 	EN Locale = "EN"
 )
 
-type LocalizedMessage map[Locale]string
+type LocalizedMessage map[Locale]string //@name LocalizedMessage
 
 func NewLocalizedMessage() LocalizedMessage {
 	return LocalizedMessage{}

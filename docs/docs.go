@@ -41,7 +41,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/appointment.Appointment"
+                                "$ref": "#/definitions/Appointment"
                             }
                         }
                     }
@@ -125,7 +125,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/operation.ServiceOperation"
+                                "$ref": "#/definitions/ServiceOperation"
                             }
                         }
                     }
@@ -158,7 +158,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/operation.ServiceOperation"
+                            "$ref": "#/definitions/ServiceOperation"
                         }
                     }
                 }
@@ -183,7 +183,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/servicerequest.ServiceRequest"
+                                "$ref": "#/definitions/ServiceRequest"
                             }
                         }
                     }
@@ -209,7 +209,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/user.User"
+                                "$ref": "#/definitions/User"
                             }
                         }
                     }
@@ -234,7 +234,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.UserCreate"
+                            "$ref": "#/definitions/UserCreate"
                         }
                     }
                 ],
@@ -242,7 +242,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
@@ -280,7 +280,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "$ref": "#/definitions/User"
                         }
                     }
                 }
@@ -311,7 +311,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/user.UserUpdate"
+                            "$ref": "#/definitions/UserUpdate"
                         }
                     }
                 ],
@@ -319,7 +319,7 @@ const docTemplate = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/user.User"
+                            "$ref": "#/definitions/User"
                         }
                     },
                     "400": {
@@ -350,7 +350,7 @@ const docTemplate = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/vehicle.Vehicle"
+                                "$ref": "#/definitions/Vehicle"
                             }
                         }
                     }
@@ -359,7 +359,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "appointment.Appointment": {
+        "Appointment": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -384,38 +384,13 @@ const docTemplate = `{
                 }
             }
         },
-        "company.Company": {
-            "type": "object",
-            "properties": {
-                "address_line_1": {
-                    "type": "string"
-                },
-                "address_line_2": {
-                    "type": "string"
-                },
-                "createdAt": {
-                    "description": "Automatically managed by GORM for creation time",
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "description": "Automatically managed by GORM for update time",
-                    "type": "string"
-                }
-            }
-        },
-        "core.LocalizedMessage": {
+        "LocalizedMessage": {
             "type": "object",
             "additionalProperties": {
                 "type": "string"
             }
         },
-        "operation.Operation": {
+        "Operation": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -423,13 +398,13 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "description": {
-                    "$ref": "#/definitions/core.LocalizedMessage"
+                    "$ref": "#/definitions/LocalizedMessage"
                 },
                 "id": {
                     "type": "string"
                 },
                 "name": {
-                    "$ref": "#/definitions/core.LocalizedMessage"
+                    "$ref": "#/definitions/LocalizedMessage"
                 },
                 "service_operation_id": {
                     "type": "string"
@@ -440,7 +415,7 @@ const docTemplate = `{
                 }
             }
         },
-        "operation.ServiceOperation": {
+        "ServiceOperation": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -451,12 +426,12 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "name": {
-                    "$ref": "#/definitions/core.LocalizedMessage"
+                    "$ref": "#/definitions/LocalizedMessage"
                 },
                 "operations": {
                     "type": "array",
                     "items": {
-                        "$ref": "#/definitions/operation.Operation"
+                        "$ref": "#/definitions/Operation"
                     }
                 },
                 "updatedAt": {
@@ -465,7 +440,7 @@ const docTemplate = `{
                 }
             }
         },
-        "servicerequest.ServiceRequest": {
+        "ServiceRequest": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -484,7 +459,7 @@ const docTemplate = `{
                 }
             }
         },
-        "user.User": {
+        "User": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -509,7 +484,7 @@ const docTemplate = `{
                 }
             }
         },
-        "user.UserCreate": {
+        "UserCreate": {
             "description": "UserCreate information with user firstname and lastname",
             "type": "object",
             "required": [
@@ -536,7 +511,7 @@ const docTemplate = `{
                 }
             }
         },
-        "user.UserUpdate": {
+        "UserUpdate": {
             "type": "object",
             "required": [
                 "email",
@@ -562,7 +537,7 @@ const docTemplate = `{
                 }
             }
         },
-        "vehicle.Vehicle": {
+        "Vehicle": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -584,6 +559,31 @@ const docTemplate = `{
                 },
                 "year": {
                     "type": "integer"
+                }
+            }
+        },
+        "company.Company": {
+            "type": "object",
+            "properties": {
+                "address_line_1": {
+                    "type": "string"
+                },
+                "address_line_2": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "description": "Automatically managed by GORM for creation time",
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "description": "Automatically managed by GORM for update time",
+                    "type": "string"
                 }
             }
         }

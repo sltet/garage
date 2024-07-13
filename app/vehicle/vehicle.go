@@ -9,7 +9,7 @@ type Vehicle struct {
 	Make  string `json:"make"`
 	Model string `json:"model"`
 	Year  int    `json:"year"`
-}
+} //@name Vehicle
 
 func NewVehicle(make string, model string, year int) Vehicle {
 	return Vehicle{

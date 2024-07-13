@@ -14,7 +14,7 @@ type Entity struct {
 	ID        uuid.UUID `json:"id" gorm:"type:char(36);primary_key;"`
 	CreatedAt time.Time // Automatically managed by GORM for creation time
 	UpdatedAt time.Time // Automatically managed by GORM for update time
-}
+} //@name Entity
 
 func NewEntity() Entity {
 	return Entity{}

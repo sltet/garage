@@ -1,6 +1,6 @@
 basePath: /
 definitions:
-  appointment.Appointment:
+  Appointment:
     properties:
       createdAt:
         description: Automatically managed by GORM for creation time
@@ -17,45 +17,28 @@ definitions:
         description: Automatically managed by GORM for update time
         type: string
     type: object
-  company.Company:
-    properties:
-      address_line_1:
-        type: string
-      address_line_2:
-        type: string
-      createdAt:
-        description: Automatically managed by GORM for creation time
-        type: string
-      id:
-        type: string
-      name:
-        type: string
-      updatedAt:
-        description: Automatically managed by GORM for update time
-        type: string
-    type: object
-  core.LocalizedMessage:
+  LocalizedMessage:
     additionalProperties:
       type: string
     type: object
-  operation.Operation:
+  Operation:
     properties:
       createdAt:
         description: Automatically managed by GORM for creation time
         type: string
       description:
-        $ref: '#/definitions/core.LocalizedMessage'
+        $ref: '#/definitions/LocalizedMessage'
       id:
         type: string
       name:
-        $ref: '#/definitions/core.LocalizedMessage'
+        $ref: '#/definitions/LocalizedMessage'
       service_operation_id:
         type: string
       updatedAt:
         description: Automatically managed by GORM for update time
         type: string
     type: object
-  operation.ServiceOperation:
+  ServiceOperation:
     properties:
       createdAt:
         description: Automatically managed by GORM for creation time
@@ -63,16 +46,16 @@ definitions:
       id:
         type: string
       name:
-        $ref: '#/definitions/core.LocalizedMessage'
+        $ref: '#/definitions/LocalizedMessage'
       operations:
         items:
-          $ref: '#/definitions/operation.Operation'
+          $ref: '#/definitions/Operation'
         type: array
       updatedAt:
         description: Automatically managed by GORM for update time
         type: string
     type: object
-  servicerequest.ServiceRequest:
+  ServiceRequest:
     properties:
       createdAt:
         description: Automatically managed by GORM for creation time
@@ -85,7 +68,7 @@ definitions:
         description: Automatically managed by GORM for update time
         type: string
     type: object
-  user.User:
+  User:
     properties:
       createdAt:
         description: Automatically managed by GORM for creation time
@@ -102,7 +85,7 @@ definitions:
         description: Automatically managed by GORM for update time
         type: string
     type: object
-  user.UserCreate:
+  UserCreate:
     description: UserCreate information with user firstname and lastname
     properties:
       email:
@@ -123,7 +106,7 @@ definitions:
     - first_name
     - last_name
     type: object
-  user.UserUpdate:
+  UserUpdate:
     properties:
       email:
         example: john@doe.com
@@ -143,7 +126,7 @@ definitions:
     - first_name
     - last_name
     type: object
-  vehicle.Vehicle:
+  Vehicle:
     properties:
       createdAt:
         description: Automatically managed by GORM for creation time
@@ -159,6 +142,23 @@ definitions:
         type: string
       year:
         type: integer
+    type: object
+  company.Company:
+    properties:
+      address_line_1:
+        type: string
+      address_line_2:
+        type: string
+      createdAt:
+        description: Automatically managed by GORM for creation time
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        description: Automatically managed by GORM for update time
+        type: string
     type: object
 info:
   contact:
@@ -180,7 +180,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/appointment.Appointment'
+              $ref: '#/definitions/Appointment'
             type: array
       summary: find all appointments
       tags:
@@ -235,7 +235,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/operation.ServiceOperation'
+              $ref: '#/definitions/ServiceOperation'
             type: array
       summary: find all garage service operations
       tags:
@@ -257,7 +257,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/operation.ServiceOperation'
+            $ref: '#/definitions/ServiceOperation'
       summary: find all garage service operation by id
       tags:
       - operation
@@ -273,7 +273,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/servicerequest.ServiceRequest'
+              $ref: '#/definitions/ServiceRequest'
             type: array
       summary: find all service requests
       tags:
@@ -290,7 +290,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/user.User'
+              $ref: '#/definitions/User'
             type: array
       summary: find all users
       tags:
@@ -305,14 +305,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/user.UserCreate'
+          $ref: '#/definitions/UserCreate'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.User'
+            $ref: '#/definitions/User'
         "400":
           description: Bad Request
           schema:
@@ -337,7 +337,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.User'
+            $ref: '#/definitions/User'
       summary: find user by id
       tags:
       - user
@@ -356,14 +356,14 @@ paths:
         name: user
         required: true
         schema:
-          $ref: '#/definitions/user.UserUpdate'
+          $ref: '#/definitions/UserUpdate'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/user.User'
+            $ref: '#/definitions/User'
         "400":
           description: Bad Request
           schema:
@@ -383,7 +383,7 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/vehicle.Vehicle'
+              $ref: '#/definitions/Vehicle'
             type: array
       summary: find all vehicles
       tags:

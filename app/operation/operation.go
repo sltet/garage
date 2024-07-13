@@ -9,7 +9,7 @@ type Operation struct {
 	ServiceOperationId string                `json:"service_operation_id"`
 	Name               core.LocalizedMessage `json:"name"`
 	Description        core.LocalizedMessage `json:"description"`
-}
+} //@name Operation
 
 func NewOperation(name core.LocalizedMessage, serviceOperationId string, description core.LocalizedMessage) Operation {
 	return Operation{
