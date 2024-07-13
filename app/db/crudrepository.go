@@ -3,6 +3,7 @@ package db
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sltet/garage/app/core"
+	"gorm.io/gorm/clause"
 )
 
 type CrudRepository struct {
@@ -27,7 +28,7 @@ func (r CrudRepository) Create(ctx *gin.Context, entity core.ORMAwareEntity) (er
 }
 
 func (r CrudRepository) Read(ctx *gin.Context, entityId string, model interface{}) error {
-	err := r.EntityManager.Database().First(model, "id = ?", entityId).WithContext(ctx).Error
+	err := r.EntityManager.Database().Preload(clause.Associations).First(model, "id = ?", entityId).WithContext(ctx).Error
 	if err != nil {
 		return err
 	}

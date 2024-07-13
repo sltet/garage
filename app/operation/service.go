@@ -8,6 +8,7 @@ type Service struct {
 
 type ServiceInterface interface {
 	FindAllOperations(ctx *gin.Context) ([]ServiceOperation, error)
+	FindById(ctx *gin.Context, id string) (ServiceOperation, error)
 }
 
 func NewService(repository RepositoryInterface) *Service {
@@ -16,4 +17,8 @@ func NewService(repository RepositoryInterface) *Service {
 
 func (s *Service) FindAllOperations(ctx *gin.Context) ([]ServiceOperation, error) {
 	return s.repository.FindAll(ctx)
+}
+
+func (s *Service) FindById(ctx *gin.Context, id string) (ServiceOperation, error) {
+	return s.repository.FindById(ctx, id)
 }

@@ -14,24 +14,45 @@ func NewController(service ServiceInterface) *Controller {
 }
 
 type ControllerInterface interface {
-	FindAllOperations(ctx *gin.Context)
+	FindAllServiceOperations(ctx *gin.Context)
+	FindServiceOperationById(ctx *gin.Context)
 }
 
-// FindAllOperations godoc
+// FindAllServiceOperations godoc
 //
-//	@Summary	find all garage operations
+//	@Summary	find all garage service operations
 //	@Schemes
-//	@Description	find all garage operations
+//	@Description	find all garage service operations
 //	@Tags			operation
 //	@Accept			json
 //	@Produce		json
 //	@Success		200	{array}	ServiceOperation
-//	@Router			/operations [get]
-func (c Controller) FindAllOperations(ctx *gin.Context) {
+//	@Router			/service-operations [get]
+func (c Controller) FindAllServiceOperations(ctx *gin.Context) {
 	operations, err := c.service.FindAllOperations(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(200, operations)
+}
+
+// FindServiceOperationById godoc
+//
+//	@Summary	find all garage service operation by id
+//	@Schemes
+//	@Description	find all garage service operation by id
+//	@Param			id	path	string	true	"service operation id"
+//	@Tags			operation
+//	@Accept			json
+//	@Produce		json
+//	@Success		200	{object}	ServiceOperation
+//	@Router			/service-operations/{id} [get]
+func (c Controller) FindServiceOperationById(ctx *gin.Context) {
+	operation, err := c.service.FindById(ctx, ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(200, operation)
 }

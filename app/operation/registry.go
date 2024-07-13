@@ -23,7 +23,7 @@ func (r Registry) ServicesDefinition(c *dig.Container) {
 func (r Registry) SqlSchemaMigration(db *gorm.DB) {
 	core.PanicOnError(db.AutoMigrate(&ServiceOperation{}))
 	core.PanicOnError(db.AutoMigrate(&Operation{}))
-	Migration001{}.Up(db)
+	//Migration001{}.Up(db)
 }
 
 func (r Registry) RegisterCustomValidations(validator *validator.Validate) {
@@ -41,9 +41,16 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
-			Path:   "/operations",
+			Path:   "/service-operations",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
-				controller(c).FindAllOperations(ctx)
+				controller(c).FindAllServiceOperations(ctx)
+			},
+		},
+		{
+			Method: core.GET,
+			Path:   "/service-operations/:id",
+			Handler: func(ctx *gin.Context, c *dig.Container) {
+				controller(c).FindServiceOperationById(ctx)
 			},
 		},
 	}

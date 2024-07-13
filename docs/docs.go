@@ -106,9 +106,9 @@ const docTemplate = `{
                 }
             }
         },
-        "/operations": {
+        "/service-operations": {
             "get": {
-                "description": "find all garage operations",
+                "description": "find all garage service operations",
                 "consumes": [
                     "application/json"
                 ],
@@ -118,7 +118,7 @@ const docTemplate = `{
                 "tags": [
                     "operation"
                 ],
-                "summary": "find all garage operations",
+                "summary": "find all garage service operations",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -127,6 +127,38 @@ const docTemplate = `{
                             "items": {
                                 "$ref": "#/definitions/operation.ServiceOperation"
                             }
+                        }
+                    }
+                }
+            }
+        },
+        "/service-operations/{id}": {
+            "get": {
+                "description": "find all garage service operation by id",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "operation"
+                ],
+                "summary": "find all garage service operation by id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "service operation id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/operation.ServiceOperation"
                         }
                     }
                 }

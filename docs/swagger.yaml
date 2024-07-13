@@ -223,11 +223,11 @@ paths:
       summary: find by id
       tags:
       - company
-  /operations:
+  /service-operations:
     get:
       consumes:
       - application/json
-      description: find all garage operations
+      description: find all garage service operations
       produces:
       - application/json
       responses:
@@ -237,7 +237,28 @@ paths:
             items:
               $ref: '#/definitions/operation.ServiceOperation'
             type: array
-      summary: find all garage operations
+      summary: find all garage service operations
+      tags:
+      - operation
+  /service-operations/{id}:
+    get:
+      consumes:
+      - application/json
+      description: find all garage service operation by id
+      parameters:
+      - description: service operation id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/operation.ServiceOperation'
+      summary: find all garage service operation by id
       tags:
       - operation
   /service-requests:
