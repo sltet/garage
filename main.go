@@ -16,6 +16,7 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/dig"
+	"os"
 )
 
 func getRegistries() []core.AppRegistry {
@@ -83,6 +84,10 @@ func main() {
 
 	router.Use()
 	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))
+	environment := os.Getenv("ENV")
+	if environment != "local" {
+		handler = ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL(" https://garage-floral-field-9662.fly.dev/swagger/doc.json"))
+	}
 	router.GET("/swagger/*any", handler)
 
 	router.Run() // Listen and serve on 0.0.0.0:8080

@@ -16,6 +16,7 @@ type ControllerInterface interface {
 }
 
 // FindAllVehicles godoc
+//
 //	@Summary	find all vehicles
 //	@Schemes
 //	@Description	find all vehicles
@@ -27,5 +28,8 @@ type ControllerInterface interface {
 func (c Controller) FindAllVehicles(ctx *gin.Context) {
 	ctx.JSON(200, []Vehicle{
 		NewVehicle("Toyota", "Yaris", 2012),
+		NewVehicle("Toyota", "Matrix", 2015),
+		NewVehicle("Ford", "Escape", 2012),
+		NewVehicle("Toyota", "Rav4", 2022),
 	})
 }

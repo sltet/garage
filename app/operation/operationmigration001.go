@@ -8,23 +8,74 @@ import (
 type Migration001 struct{}
 
 func (m Migration001) Up(db *gorm.DB) {
-	loc := core.NewLocalizedMessage()
-	loc.Add(core.EN, "Vehicle Maintenance Services")
-	loc.Add(core.FR, "Service de maintenance")
-	so1 := NewServiceOperation(loc)
+	serviceOperationName := core.NewLocalizedMessage()
+	serviceOperationName.Add(core.EN, "Vehicle Maintenance Services")
+	serviceOperationName.Add(core.FR, "Service de maintenance")
+	so1 := NewServiceOperation(serviceOperationName)
 
 	db.Session(&gorm.Session{SkipHooks: false}).Create(&so1)
-	loc = core.NewLocalizedMessage()
-	loc.Add(core.FR, "Changement d'huile")
-	loc.Add(core.EN, "Oil Change")
 
-	des := core.NewLocalizedMessage()
-	des.Add(core.EN, "Regular oil changes to ensure engine health")
-	so1.AddOperation(NewOperation(loc, so1.GetID(), des))
-	//so1.AddOperation(NewOperation("Fluid Checks and Refills", so1.GetID(), "Checking and refilling fluids like brake fluid, coolant, and transmission fluid."))
-	//so1.AddOperation(NewOperation("Filter Replacement", so1.GetID(), "Replacing air filters, fuel filters, and cabin filters."))
-	//so1.AddOperation(NewOperation("Tire Services", so1.GetID(), "Tire rotation, balancing, and alignment."))
+	operationName := core.NewLocalizedMessage()
+	operationName.Add(core.FR, "Changement d'huile")
+	operationName.Add(core.EN, "Oil Change")
+	operationDescription := core.NewLocalizedMessage()
+	operationDescription.Add(core.EN, "Regular oil changes to ensure engine health")
+	operation := NewOperation(operationName, so1.GetID(), operationDescription)
+	so1.AddOperation(operation)
+
+	operationName = core.NewLocalizedMessage()
+	operationName.Add(core.FR, "Verification des fluides")
+	operationName.Add(core.EN, "Fluid Checks and Refills")
+	operationDescription = core.NewLocalizedMessage()
+	operationDescription.Add(core.EN, "Checking and refilling fluids like brake fluid, coolant, and transmission fluid.")
+	operation = NewOperation(operationName, so1.GetID(), operationDescription)
+	so1.AddOperation(operation)
+
+	operationName = core.NewLocalizedMessage()
+	operationName.Add(core.FR, "Remplacement de filtre")
+	operationName.Add(core.EN, "Filter Replacement")
+	operationDescription = core.NewLocalizedMessage()
+	operationDescription.Add(core.EN, "Replacing air filters, fuel filters, and cabin filters.")
+	operation = NewOperation(operationName, so1.GetID(), operationDescription)
+	so1.AddOperation(operation)
+
+	operationName = core.NewLocalizedMessage()
+	operationName.Add(core.FR, "Pneumatique")
+	operationName.Add(core.EN, "Tire Services")
+	operationDescription = core.NewLocalizedMessage()
+	operationDescription.Add(core.EN, "Tire replacement, rotation, balancing, and alignment.")
+	operationDescription.Add(core.FR, "Remplacement de pneu, alignement, balancement.")
+	operation = NewOperation(operationName, so1.GetID(), operationDescription)
+	so1.AddOperation(operation)
+
+	// OPERATION 2
+
 	db.Session(&gorm.Session{SkipHooks: false}).Save(&so1)
+	serviceOperationName = core.NewLocalizedMessage()
+	serviceOperationName.Add(core.EN, "Vehicle Repair Services")
+	serviceOperationName.Add(core.FR, "Service de réparation")
+	so1 = NewServiceOperation(serviceOperationName)
+
+	db.Session(&gorm.Session{SkipHooks: false}).Create(&so1)
+
+	operationName = core.NewLocalizedMessage()
+	operationName.Add(core.FR, "Réparation moteur")
+	operationName.Add(core.EN, "Engine Repair")
+	operationDescription = core.NewLocalizedMessage()
+	operationDescription.Add(core.EN, "Diagnosing and fixing engine-related issues.")
+	operation = NewOperation(operationName, so1.GetID(), operationDescription)
+	so1.AddOperation(operation)
+
+	operationName = core.NewLocalizedMessage()
+	operationName.Add(core.FR, "Réparation de la transmission")
+	operationName.Add(core.EN, "Transmission Repair")
+	operationDescription = core.NewLocalizedMessage()
+	operationDescription.Add(core.EN, "Repairing or replacing transmission systems.")
+	operation = NewOperation(operationName, so1.GetID(), operationDescription)
+	so1.AddOperation(operation)
+
+	db.Session(&gorm.Session{SkipHooks: false}).Save(&so1)
+
 	//
 	//so2 := NewServiceOperation("Vehicle Repair Services")
 	//db.Session(&gorm.Session{SkipHooks: false}).Create(&so2)
