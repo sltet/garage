@@ -48,7 +48,7 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 			Method: core.POST,
 			Path:   "/companies",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
-				controller(c).FindById(ctx)
+				controller(c).CreateCompany(ctx)
 			},
 		},
 		{
