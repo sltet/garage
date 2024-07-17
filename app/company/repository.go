@@ -34,7 +34,7 @@ func (r Repository) FindAll(ctx *gin.Context) ([]Company, core.DetailedError) {
 }
 
 func (r Repository) Create(ctx *gin.Context, company Company) (Company, core.DetailedError) {
-	err := r.db.Database().Create(company).WithContext(ctx).Error
+	err := r.crudRepository.Create(ctx, &company)
 	if err != nil {
 		return company, core.NewDatabaseError(err)
 	}
