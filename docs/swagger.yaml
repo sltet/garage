@@ -17,6 +17,69 @@ definitions:
         description: Automatically managed by GORM for update time
         type: string
     type: object
+  Company:
+    properties:
+      address_line_1:
+        type: string
+      address_line_2:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      createdAt:
+        description: Automatically managed by GORM for creation time
+        type: string
+      email:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      postal_code:
+        type: string
+      state:
+        type: string
+      updatedAt:
+        description: Automatically managed by GORM for update time
+        type: string
+      website:
+        type: string
+    type: object
+  CompanyCreate:
+    properties:
+      address_line_1:
+        type: string
+      address_line_2:
+        type: string
+      city:
+        type: string
+      country:
+        type: string
+      email:
+        type: string
+      name:
+        type: string
+      phone:
+        type: string
+      postal_code:
+        type: string
+      state:
+        type: string
+      website:
+        type: string
+    required:
+    - address_line_1
+    - address_line_2
+    - city
+    - country
+    - email
+    - phone
+    - postal_code
+    - state
+    type: object
   LocalizedMessage:
     additionalProperties:
       type: string
@@ -143,23 +206,6 @@ definitions:
       year:
         type: integer
     type: object
-  company.Company:
-    properties:
-      address_line_1:
-        type: string
-      address_line_2:
-        type: string
-      createdAt:
-        description: Automatically managed by GORM for creation time
-        type: string
-      id:
-        type: string
-      name:
-        type: string
-      updatedAt:
-        description: Automatically managed by GORM for update time
-        type: string
-    type: object
 info:
   contact:
     email: steve.landry@cloudpit.ca
@@ -197,9 +243,34 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/company.Company'
+              $ref: '#/definitions/Company'
             type: array
       summary: find all companies
+      tags:
+      - company
+    post:
+      consumes:
+      - application/json
+      description: create company
+      parameters:
+      - description: the company to create
+        in: body
+        name: company
+        required: true
+        schema:
+          $ref: '#/definitions/CompanyCreate'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Company'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: create company
       tags:
       - company
   /companies/{id}:
@@ -219,7 +290,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/company.Company'
+            $ref: '#/definitions/Company'
       summary: find by id
       tags:
       - company

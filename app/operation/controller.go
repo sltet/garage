@@ -2,7 +2,6 @@ package operation
 
 import (
 	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 type Controller struct {
@@ -31,7 +30,7 @@ type ControllerInterface interface {
 func (c Controller) FindAllServiceOperations(ctx *gin.Context) {
 	operations, err := c.service.FindAllOperations(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(200, operations)
@@ -51,7 +50,7 @@ func (c Controller) FindAllServiceOperations(ctx *gin.Context) {
 func (c Controller) FindServiceOperationById(ctx *gin.Context) {
 	operation, err := c.service.FindById(ctx, ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(200, operation)

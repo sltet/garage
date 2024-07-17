@@ -35,7 +35,8 @@ type ControllerInterface interface {
 func (c Controller) FindAllUsers(ctx *gin.Context) {
 	users, err := c.service.FindAll(ctx)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
+		return
 	}
 	ctx.JSON(200, users)
 }
@@ -54,7 +55,7 @@ func (c Controller) FindAllUsers(ctx *gin.Context) {
 func (c Controller) FindById(ctx *gin.Context) {
 	user, err := c.service.FindById(ctx, ctx.Param("id"))
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(200, user)
@@ -80,7 +81,7 @@ func (c Controller) CreateUser(ctx *gin.Context) {
 	}
 	user, err := c.service.CreateUser(ctx, u)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(http.StatusCreated, user)
@@ -107,7 +108,7 @@ func (c Controller) UpdateUser(ctx *gin.Context) {
 	}
 	user, err := c.service.UpdateUser(ctx, ctx.Param("id"), u)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
 	ctx.JSON(200, user)

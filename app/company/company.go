@@ -9,13 +9,27 @@ type Company struct {
 	Name         string `json:"name"`
 	AddressLine1 string `json:"address_line_1"`
 	AddressLine2 string `json:"address_line_2"`
-}
+	State        string `json:"state"`
+	PostalCode   string `json:"postal_code"`
+	City         string `json:"city"`
+	Country      string `json:"country"`
+	Phone        string `json:"phone"`
+	Email        string `json:"email"`
+	Website      string `json:"website"`
+} //@name Company
 
-func NewCompany(name, addressLine1, addressLine2 string) Company {
+func NewCompany(o CompanyCreate) Company {
 	return Company{
 		Entity:       core.NewEntity(),
-		Name:         name,
-		AddressLine1: addressLine1,
-		AddressLine2: addressLine2,
+		Name:         o.Name,
+		AddressLine1: o.AddressLine1,
+		AddressLine2: o.AddressLine2,
+		State:        o.State,
+		PostalCode:   o.PostalCode,
+		City:         o.City,
+		Country:      o.Country,
+		Phone:        o.Phone,
+		Email:        o.Email,
+		Website:      o.Website,
 	}
 }

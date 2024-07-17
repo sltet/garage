@@ -2,10 +2,11 @@ package core
 
 import "github.com/gin-gonic/gin"
 
-type ApiResponse struct {
+type ApiError struct {
+	code  int
 	error string `json:"error,omitempty"`
 }
 
-func errorResponse(err error) gin.H {
-	return gin.H{"error": err.Error()}
+func NewApiError(ctx *gin.Context, err DetailedError) {
+	ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 }

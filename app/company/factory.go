@@ -11,5 +11,5 @@ type FactoryInterface interface {
 }
 
 func (f Factory) Create(company CompanyCreate) Company {
-	return NewCompany(company.Name, company.AddressLine1, company.AddressLine2)
+	return NewCompany(company)
 }
