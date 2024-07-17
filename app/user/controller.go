@@ -38,7 +38,7 @@ func (c Controller) FindAllUsers(ctx *gin.Context) {
 		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, users)
+	ctx.JSON(http.StatusOK, users)
 }
 
 // FindById godoc
@@ -58,7 +58,7 @@ func (c Controller) FindById(ctx *gin.Context) {
 		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, user)
+	ctx.JSON(http.StatusOK, user)
 }
 
 // CreateUser godoc
@@ -111,5 +111,5 @@ func (c Controller) UpdateUser(ctx *gin.Context) {
 		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, user)
+	ctx.JSON(http.StatusOK, user)
 }

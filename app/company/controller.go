@@ -35,7 +35,7 @@ func (c Controller) FindAllCompanies(ctx *gin.Context) {
 		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, companies)
+	ctx.JSON(http.StatusOK, companies)
 }
 
 // FindById godoc
@@ -56,7 +56,7 @@ func (c Controller) FindById(ctx *gin.Context) {
 		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, company)
+	ctx.JSON(http.StatusOK, company)
 }
 
 // CreateCompany godoc
@@ -82,5 +82,5 @@ func (c Controller) CreateCompany(ctx *gin.Context) {
 		ctx.JSON(err.Code(), gin.H{"error": err.Error()})
 		return
 	}
-	ctx.JSON(200, company)
+	ctx.JSON(http.StatusCreated, company)
 }

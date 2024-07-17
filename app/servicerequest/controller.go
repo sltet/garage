@@ -2,6 +2,7 @@ package servicerequest
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type Controller struct {
@@ -26,7 +27,7 @@ type ControllerInterface interface {
 //	@Success		200	{array}	ServiceRequest
 //	@Router			/service-requests [get]
 func (c Controller) FindAllServices(ctx *gin.Context) {
-	ctx.JSON(200, []ServiceRequest{{
+	ctx.JSON(http.StatusOK, []ServiceRequest{{
 		Name: "Mechanic",
 	}})
 }

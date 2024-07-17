@@ -38,7 +38,6 @@ func (r Repository) Create(ctx *gin.Context, company Company) (Company, core.Det
 	if err != nil {
 		return company, core.NewDatabaseError(err)
 	}
-
 	return company, nil
 }
 

@@ -3,6 +3,7 @@ package appointment
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/sltet/garage/app/core"
+	"net/http"
 )
 
 type Controller struct {
@@ -27,7 +28,7 @@ type ControllerInterface interface {
 //	@Success		200	{array}	Appointment
 //	@Router			/appointments [get]
 func (c Controller) FindAllAppointments(ctx *gin.Context) {
-	ctx.JSON(200, []Appointment{{
+	ctx.JSON(http.StatusOK, []Appointment{{
 		Entity:     core.NewEntity(),
 		LocationID: "1",
 		ServiceID:  "1",

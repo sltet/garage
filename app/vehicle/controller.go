@@ -2,6 +2,7 @@ package vehicle
 
 import (
 	"github.com/gin-gonic/gin"
+	"net/http"
 )
 
 type Controller struct {
@@ -26,7 +27,7 @@ type ControllerInterface interface {
 //	@Success		200	{array}	Vehicle
 //	@Router			/vehicles [get]
 func (c Controller) FindAllVehicles(ctx *gin.Context) {
-	ctx.JSON(200, []Vehicle{
+	ctx.JSON(http.StatusOK, []Vehicle{
 		NewVehicle("Toyota", "Yaris", 2012),
 		NewVehicle("Toyota", "Matrix", 2015),
 		NewVehicle("Ford", "Escape", 2012),
