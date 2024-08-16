@@ -15,6 +15,7 @@ type ServiceInterface interface {
 	UpdateUser(ctx *gin.Context, id string, u UserUpdate) (user User, err core.DetailedError)
 	FindAll(ctx *gin.Context) ([]User, core.DetailedError)
 	FindById(ctx *gin.Context, id string) (User, core.DetailedError)
+	FindByExternalId(ctx *gin.Context, id string) (User, core.DetailedError)
 }
 
 func NewService(factory FactoryInterface, repository RepositoryInterface) *Service {
@@ -26,6 +27,10 @@ func (s Service) FindAll(ctx *gin.Context) ([]User, core.DetailedError) {
 }
 
 func (s Service) FindById(ctx *gin.Context, id string) (User, core.DetailedError) {
+	return s.repository.FindById(ctx, id)
+}
+
+func (s Service) FindByExternalId(ctx *gin.Context, id string) (User, core.DetailedError) {
 	return s.repository.FindById(ctx, id)
 }
 

@@ -16,7 +16,7 @@ type FactoryInterface interface {
 }
 
 func (f Factory) convert(user UserCreate) User {
-	return NewUser(user.FirstName, user.LastName, user.Email)
+	return NewUser(user.FirstName, user.LastName, user.Email, user.ExternalId)
 }
 
 func (f Factory) CreateUser(_ *gin.Context, u UserCreate) (user User) {

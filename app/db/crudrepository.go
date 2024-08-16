@@ -12,6 +12,7 @@ type CrudRepository struct {
 
 type CrudRepositoryInterface interface {
 	Create(ctx *gin.Context, entity core.ORMAwareEntity) (err error)
+	CreateIfNotExits(ctx *gin.Context, entity core.ORMAwareEntity) (err error)
 	Read(ctx *gin.Context, entityId string, model interface{}) error
 }
 
@@ -21,6 +22,14 @@ func NewCrudRepository(em EntityManagerInterface) *CrudRepository {
 
 func (r CrudRepository) Create(ctx *gin.Context, entity core.ORMAwareEntity) (err error) {
 	err = r.EntityManager.Database().Create(entity).WithContext(ctx).Error
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func (r CrudRepository) CreateIfNotExits(ctx *gin.Context, entity core.ORMAwareEntity) (err error) {
+	err = r.EntityManager.Database().FirstOrCreate(entity, "id = ?", entity.GetID()).WithContext(ctx).Error
 	if err != nil {
 		return err
 	}

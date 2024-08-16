@@ -44,7 +44,14 @@ func (r Repository) FindById(ctx *gin.Context, id string) (User, core.DetailedEr
 }
 
 func (r Repository) Create(ctx *gin.Context, u User) (User, core.DetailedError) {
-	err := r.crudRepository.Create(ctx, &u)
+	if u.ExternalId != "" {
+		dbErr := r.db.Database().FirstOrCreate(&u, "external_id = ?", u.ExternalId).WithContext(ctx).Error
+		if dbErr != nil {
+			return u, core.NewDatabaseError(dbErr)
+		}
+		return u, nil
+	}
+	err := r.crudRepository.CreateIfNotExits(ctx, &u)
 	if err != nil {
 		return u, core.NewDatabaseError(err)
 	}
@@ -52,10 +59,9 @@ func (r Repository) Create(ctx *gin.Context, u User) (User, core.DetailedError) 
 }
 
 func (r Repository) Save(ctx *gin.Context, u User) (User, core.DetailedError) {
-	var user User
-	err := r.db.Database().Save(u).WithContext(ctx).Error
-	if err != nil {
-		return user, core.NewDatabaseError(err)
+	dbErr := r.db.Database().Save(u).WithContext(ctx).Error
+	if dbErr != nil {
+		return u, core.NewDatabaseError(dbErr)
 	}
 	return u, nil
 }

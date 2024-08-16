@@ -1,10 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
 	"github.com/sltet/garage/app/appointment"
+	"github.com/sltet/garage/app/auth"
 	"github.com/sltet/garage/app/company"
 	"github.com/sltet/garage/app/core"
 	"github.com/sltet/garage/app/db"
@@ -16,11 +18,11 @@ import (
 	swaggerfiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"go.uber.org/dig"
-	"os"
 )
 
 func getRegistries() []core.AppRegistry {
 	return []core.AppRegistry{
+		auth.Registry{},
 		db.Registry{},
 		user.Registry{},
 		company.Registry{},
@@ -67,6 +69,10 @@ func registerValidations() {
 	}
 }
 
+func init() {
+	core.InitEnvConfigs()
+}
+
 //	@BasePath		/
 //	@contact.name	Steve Landry Tene
 //	@contact.email	steve.landry@cloudpit.ca
@@ -83,11 +89,7 @@ func main() {
 	registerValidations()
 
 	router.Use()
-	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL("http://localhost:8080/swagger/doc.json"))
-	environment := os.Getenv("ENV")
-	if environment != "local" {
-		handler = ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL(" https://garage-floral-field-9662.fly.dev/swagger/doc.json"))
-	}
+	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL(fmt.Sprintf("%s/swagger/doc.json", core.EnvConfigs.BaseUrl)))
 	router.GET("/swagger/*any", handler)
 
 	router.Run() // Listen and serve on 0.0.0.0:8080
