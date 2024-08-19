@@ -1,4 +1,4 @@
-basePath: /
+basePath: /api
 definitions:
   Appointment:
     properties:
@@ -138,6 +138,8 @@ definitions:
         type: string
       email:
         type: string
+      external_id:
+        type: string
       first_name:
         type: string
       id:
@@ -153,6 +155,11 @@ definitions:
     properties:
       email:
         example: john@doe.com
+        type: string
+      external_id:
+        example: "123456"
+        maxLength: 20
+        minLength: 2
         type: string
       first_name:
         example: john
@@ -231,6 +238,31 @@ paths:
       summary: find all appointments
       tags:
       - appointment
+  /auth/google:
+    get:
+      consumes:
+      - application/json
+      description: Validate google token
+      parameters:
+      - description: the google id token
+        in: query
+        name: token
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Company'
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Validate google token
+      tags:
+      - auth
   /companies:
     get:
       consumes:

@@ -46,6 +46,10 @@ func NewBadRequestError(message string) DetailedError {
 	return &Error{errorCode: http.StatusBadRequest, message: message}
 }
 
+func NewUnauthorizedError(message string) DetailedError {
+	return &Error{errorCode: http.StatusUnauthorized, message: message}
+}
+
 func NewUnprocessableEntityError(message string) DetailedError {
 	return &Error{errorCode: http.StatusUnprocessableEntity, message: message}
 }

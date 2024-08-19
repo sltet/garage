@@ -48,6 +48,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/auth/google": {
+            "get": {
+                "description": "Validate google token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "auth"
+                ],
+                "summary": "Validate google token",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "the google id token",
+                        "name": "token",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Company"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
         "/companies": {
             "get": {
                 "description": "find all companies",
@@ -598,6 +636,9 @@ const docTemplate = `{
                 "email": {
                     "type": "string"
                 },
+                "external_id": {
+                    "type": "string"
+                },
                 "first_name": {
                     "type": "string"
                 },
@@ -625,6 +666,12 @@ const docTemplate = `{
                 "email": {
                     "type": "string",
                     "example": "john@doe.com"
+                },
+                "external_id": {
+                    "type": "string",
+                    "maxLength": 20,
+                    "minLength": 2,
+                    "example": "123456"
                 },
                 "first_name": {
                     "type": "string",
@@ -698,7 +745,7 @@ const docTemplate = `{
 var SwaggerInfo = &swag.Spec{
 	Version:          "",
 	Host:             "",
-	BasePath:         "/",
+	BasePath:         "/api",
 	Schemes:          []string{},
 	Title:            "",
 	Description:      "",

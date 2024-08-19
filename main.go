@@ -2,9 +2,13 @@ package main
 
 import (
 	"fmt"
+	"github.com/alexedwards/scs/v2"
+	"github.com/gin-contrib/sessions"
+	gormsessions "github.com/gin-contrib/sessions/gorm"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 	"github.com/go-playground/validator/v10"
+	"github.com/markbates/goth/gothic"
 	"github.com/sltet/garage/app/appointment"
 	"github.com/sltet/garage/app/auth"
 	"github.com/sltet/garage/app/company"
@@ -20,9 +24,17 @@ import (
 	"go.uber.org/dig"
 )
 
-func getRegistries() []core.AppRegistry {
+var sessionManager *scs.SessionManager
+var sessionName = "auth-session"
+
+func getPublicRoutes() []core.AppRegistry {
 	return []core.AppRegistry{
 		auth.Registry{},
+	}
+}
+
+func getPrivateRoutes() []core.AppRegistry {
+	return []core.AppRegistry{
 		db.Registry{},
 		user.Registry{},
 		company.Registry{},
@@ -33,8 +45,20 @@ func getRegistries() []core.AppRegistry {
 	}
 }
 
-func registerApiRoutes(c *dig.Container, router *gin.Engine) {
-	for _, registry := range getRegistries() {
+func getRegistries() []core.AppRegistry {
+	return append(getPublicRoutes(), getPrivateRoutes()...)
+}
+
+func registerPublicRoutes(c *dig.Container, router *gin.RouterGroup) {
+	for _, registry := range getPublicRoutes() {
+		for _, apiRoute := range registry.ApiRouteDefinitions() {
+			router.Handle(apiRoute.Method.String(), apiRoute.Path, NewApiHandler(apiRoute.Handler, c))
+		}
+	}
+}
+
+func registerApiRoutes(c *dig.Container, router *gin.RouterGroup) {
+	for _, registry := range getPrivateRoutes() {
 		for _, apiRoute := range registry.ApiRouteDefinitions() {
 			router.Handle(apiRoute.Method.String(), apiRoute.Path, NewApiHandler(apiRoute.Handler, c))
 		}
@@ -69,11 +93,19 @@ func registerValidations() {
 	}
 }
 
+func configureSessionStore(router *gin.Engine, ctn *dig.Container) {
+	ctn.Invoke(func(em db.EntityManagerInterface) {
+		store := gormsessions.NewStore(em.Database(), true, []byte(core.EnvConfigs.SessionKey))
+		router.Use(sessions.Sessions(sessionName, store))
+		gothic.Store = store
+	})
+}
+
 func init() {
 	core.InitEnvConfigs()
 }
 
-//	@BasePath		/
+//	@BasePath		/api
 //	@contact.name	Steve Landry Tene
 //	@contact.email	steve.landry@cloudpit.ca
 
@@ -82,13 +114,15 @@ func init() {
 func main() {
 	router := gin.Default()
 	ctn := dig.New()
-
 	registerServices(ctn)
-	registerApiRoutes(ctn, router)
+	configureSessionStore(router, ctn)
+	public := router.Group("/")
+	registerPublicRoutes(ctn, public)
+	apis := router.Group("/api", auth.AuthMiddleware())
+	registerApiRoutes(ctn, apis)
 	schemaMigration(ctn)
 	registerValidations()
 
-	router.Use()
 	handler := ginSwagger.WrapHandler(swaggerfiles.Handler, ginSwagger.URL(fmt.Sprintf("%s/swagger/doc.json", core.EnvConfigs.BaseUrl)))
 	router.GET("/swagger/*any", handler)
 

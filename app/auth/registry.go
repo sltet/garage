@@ -16,7 +16,6 @@ func (r Registry) Name() string {
 
 func (r Registry) ServicesDefinition(c *dig.Container) {
 	core.PanicOnError(c.Provide(NewController, dig.As(new(ControllerInterface))))
-	core.PanicOnError(c.Provide(NewGoogleService, dig.As(new(GoogleServiceInterface))))
 	core.PanicOnError(c.Provide(NewService, dig.As(new(ServiceInterface))))
 }
 
@@ -38,16 +37,23 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 	return []core.ApiRouteDefinition{
 		{
 			Method: core.GET,
-			Path:   "/auth/google/callback",
+			Path:   "/auth/:provider/callback",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
-				controller(c).HandleCallbackGoogleLogin(ctx)
+				controller(c).HandleCallback(ctx)
 			},
 		},
 		{
 			Method: core.GET,
-			Path:   "/auth/login/google",
+			Path:   "/auth/:provider",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
-				controller(c).HandleGoogleLogin(ctx)
+				controller(c).HandleLogin(ctx)
+			},
+		},
+		{
+			Method: core.GET,
+			Path:   "/auth/logout/:provider",
+			Handler: func(ctx *gin.Context, c *dig.Container) {
+				controller(c).HandleLogout(ctx)
 			},
 		},
 	}

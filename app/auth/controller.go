@@ -5,11 +5,6 @@ import (
 	"net/http"
 )
 
-var (
-	// TODO: randomize it
-	oauthStateString = "steve"
-)
-
 type Controller struct {
 	service ServiceInterface
 }
@@ -19,9 +14,10 @@ func NewController(service ServiceInterface) *Controller {
 }
 
 type ControllerInterface interface {
-	HandleGoogleLogin(ctx *gin.Context)
+	HandleLogin(ctx *gin.Context)
 	ValidateGoogleToken(ctx *gin.Context)
-	HandleCallbackGoogleLogin(ctx *gin.Context)
+	HandleCallback(ctx *gin.Context)
+	HandleLogout(ctx *gin.Context)
 }
 
 // ValidateGoogleToken godoc
@@ -42,18 +38,26 @@ func (c Controller) ValidateGoogleToken(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "token cannot be empty"})
 		return
 	}
-	//user, err := c.service.AuthenticateGoogleToken(ctx, idToken)
-	//if err != nil {
-	//	ctx.JSON(err.Code(), gin.H{"error": err.Error()})
-	//	return
-	//}
-	//ctx.JSON(http.StatusOK, user)
 }
 
-func (c Controller) HandleCallbackGoogleLogin(ctx *gin.Context) {
-	c.service.HandleCallbackGoogleLogin(ctx)
+func (c Controller) HandleCallback(ctx *gin.Context) {
+	user, err := c.service.HandleCallback(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.JSON(http.StatusOK, user)
 }
 
-func (c Controller) HandleGoogleLogin(ctx *gin.Context) {
-	c.service.HandleGoogleLogin(ctx)
+func (c Controller) HandleLogin(ctx *gin.Context) {
+	c.service.HandleLogin(ctx)
+}
+
+func (c Controller) HandleLogout(ctx *gin.Context) {
+	err := c.service.HandleLogout(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	ctx.Redirect(http.StatusTemporaryRedirect, "/")
 }
