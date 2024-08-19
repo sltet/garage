@@ -10,6 +10,10 @@ import (
 
 var EnvConfigs *EnvConfig
 
+const (
+	Production string = "prod"
+)
+
 type EnvConfig struct {
 	BaseUrl                 string `mapstructure:"BASE_URL"`
 	Environment             string `mapstructure:"ENV"`

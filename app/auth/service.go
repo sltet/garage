@@ -87,9 +87,7 @@ func addUserToSession(ctx *gin.Context, user goth.User) {
 	user.RawData = map[string]interface{}{}
 
 	session.Set("user", user)
-	session.Options(sessions.Options{
-		MaxAge: 3600 * 12, // 12hrs
-	})
+
 	err := session.Save()
 
 	if err != nil {

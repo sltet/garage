@@ -97,6 +97,17 @@ func configureSessionStore(router *gin.Engine, ctn *dig.Container) {
 	ctn.Invoke(func(em db.EntityManagerInterface) {
 		store := gormsessions.NewStore(em.Database(), true, []byte(core.EnvConfigs.SessionKey))
 		router.Use(sessions.Sessions(sessionName, store))
+		options := sessions.Options{
+			Path:     "/",
+			Domain:   core.EnvConfigs.BaseUrl,
+			MaxAge:   3600 * 12, // 12 hours
+			HttpOnly: true,
+			SameSite: 0,
+		}
+		if core.EnvConfigs.Environment == core.Production {
+			options.Secure = true
+		}
+		store.Options(options)
 		gothic.Store = store
 	})
 }
