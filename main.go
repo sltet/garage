@@ -129,7 +129,7 @@ func main() {
 	configureSessionStore(router, ctn)
 	public := router.Group("/")
 	registerPublicRoutes(ctn, public)
-	apis := router.Group("/api", auth.AuthMiddleware())
+	apis := router.Group("/api", auth.AuthMiddleware(ctn))
 	registerApiRoutes(ctn, apis)
 	schemaMigration(ctn)
 	registerValidations()

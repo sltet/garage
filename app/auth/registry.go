@@ -16,6 +16,7 @@ func (r Registry) Name() string {
 
 func (r Registry) ServicesDefinition(c *dig.Container) {
 	core.PanicOnError(c.Provide(NewController, dig.As(new(ControllerInterface))))
+	core.PanicOnError(c.Provide(NewOauthServer, dig.As(new(OauthServerInterface))))
 	core.PanicOnError(c.Provide(NewService, dig.As(new(ServiceInterface))))
 }
 
@@ -49,9 +50,23 @@ func (r Registry) ApiRouteDefinitions() []core.ApiRouteDefinition {
 				controller(c).HandleLogin(ctx)
 			},
 		},
+		//{
+		//	Method: core.GET,
+		//	Path:   "/auth/:provider/login",
+		//	Handler: func(ctx *gin.Context, c *dig.Container) {
+		//		controller(c).GetAuthLoginUrl(ctx)
+		//	},
+		//},
+		//{
+		//	Method: core.GET,
+		//	Path:   "/auth/:provider/authorize",
+		//	Handler: func(ctx *gin.Context, c *dig.Container) {
+		//		controller(c).Authorize(ctx)
+		//	},
+		//},
 		{
 			Method: core.GET,
-			Path:   "/auth/logout/:provider",
+			Path:   "/auth/:provider/logout",
 			Handler: func(ctx *gin.Context, c *dig.Container) {
 				controller(c).HandleLogout(ctx)
 			},
